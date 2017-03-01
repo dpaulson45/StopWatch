@@ -27,3 +27,6 @@ C:\Users\David\OneDrive\Documents\Programs\StopWatch\StopWatch\bin\Debug\StopWat
 C:\Users\David\OneDrive\Documents\Programs\StopWatch\StopWatch\obj\Debug\StopWatch.exe
 C:\Users\David\OneDrive\Documents\Programs\StopWatch\StopWatch\obj\Debug\StopWatch.pdb
 C:\Users\dpaul\OneDrive\Documents\Programs\StopWatch\StopWatch\obj\Debug\StopWatch.StopwatchForm.resources
+C:\Users\dpaul\Documents\GitHub\StopWatch\StopWatch\bin\Debug\StopWatch.exe.config
+C:\Users\dpaul\Documents\GitHub\StopWatch\StopWatch\obj\Debug\StopWatch.exe
+C:\Users\dpaul\Documents\GitHub\StopWatch\StopWatch\obj\Debug\StopWatch.pdb
