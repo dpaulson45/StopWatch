@@ -2,10 +2,10 @@
 <sharpUpdate>
 	<update appId="StopWatch">
 		<version>1.0.0.1</version>
-		<url>https://github.com/dpaulson45/StopWatch/releases/download/v1.0.1/Setup.msi</url>
+		<url>https://github.com/dpaulson45/StopWatch/releases/download/v1.0.1.1/Setup.msi</url>
 		<fileName>Setup.msi</fileName>
 		<md5></md5>
-		<description>v1.0.1 Release. Admin Timer fix</description>
+		<description>v1.0.1 Release. Admin Timer fix. Fixed StopWatch Assembly Version</description>
 		<launchArgs></launchArgs>
 	</update>
 </sharpUpdate>
