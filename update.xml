@@ -2,7 +2,7 @@
 <sharpUpdate>
 	<update appId="StopWatch">
 		<version>1.0.0.1</version>
-		<url></url>
+		<url>https://github.com/dpaulson45/setup.msi</url>
 		<fileName>Setup.msi</fileName>
 		<md5></md5>
 		<description></description>
