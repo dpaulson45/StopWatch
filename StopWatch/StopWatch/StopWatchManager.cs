@@ -15,7 +15,7 @@ namespace StopWatch
         private int Location_Y;
         private int Location_X = 10;
 
-        private const int btnWidth = 41;
+        private const int btnWidth = 45;
         private const int btnHeight = 20; 
 
         private Form pform;
