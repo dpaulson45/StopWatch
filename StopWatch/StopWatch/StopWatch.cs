@@ -51,7 +51,7 @@ namespace StopWatch
         
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            System.Threading.Thread.Sleep(5000); 
+            System.Threading.Thread.Sleep(10000); 
         }
 
 
@@ -130,7 +130,7 @@ namespace StopWatch
 
         public Uri ApplicationUpdaterXmlLocation
         {
-            get { return new Uri("https://github.com/update");  }
+            get { return new Uri("https://raw.githubusercontent.com/dpaulson45/StopWatch/UpdateFileBranch/update.xml");  }
         }
     }
 }
