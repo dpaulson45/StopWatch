@@ -33,6 +33,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adminTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +50,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.adminTimerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(533, 24);
@@ -69,6 +72,21 @@
             this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.downloadUpdateToolStripMenuItem.Text = "Download Update";
             this.downloadUpdateToolStripMenuItem.Click += new System.EventHandler(this.downloadUpdateToolStripMenuItem_Click);
+            // 
+            // adminTimerToolStripMenuItem
+            // 
+            this.adminTimerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enableTimerToolStripMenuItem});
+            this.adminTimerToolStripMenuItem.Name = "adminTimerToolStripMenuItem";
+            this.adminTimerToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
+            this.adminTimerToolStripMenuItem.Text = "Admin Timer";
+            // 
+            // enableTimerToolStripMenuItem
+            // 
+            this.enableTimerToolStripMenuItem.Name = "enableTimerToolStripMenuItem";
+            this.enableTimerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.enableTimerToolStripMenuItem.Text = "Disable Timer";
+            this.enableTimerToolStripMenuItem.Click += new System.EventHandler(this.enableTimerToolStripMenuItem_Click);
             // 
             // StopWatch
             // 
@@ -96,6 +114,8 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadUpdateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem adminTimerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enableTimerToolStripMenuItem;
     }
 }
 

@@ -85,13 +85,15 @@ namespace StopWatch
                         stopWatch.UpdateLabelTimeString(); 
                     }
                     adminTimer.stopWatchTimer.Enabled = false;
+                    toggleAdminEnabledWording(false);
                 }
                 else
                     iCount++; 
             }
 
             if (iCount == StopWatches.Count)
-                adminTimer.stopWatchTimer.Enabled = true; 
+                adminTimer.stopWatchTimer.Enabled = true; toggleAdminEnabledWording(true);
+
            
         }
 
@@ -137,6 +139,34 @@ namespace StopWatch
         private void downloadUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             appUpdater.DoUpdate();
+        }
+
+        private void toggleAdminEnabledWording(bool enabled)
+        {
+            if(enabled)
+                enableTimerToolStripMenuItem.Text = "Disable Timer";
+            else
+                enableTimerToolStripMenuItem.Text = "Enable Timer";
+        }
+
+
+        private void toggleAdminTimer()
+        {
+            //If it is enabled, disable it and change wording of Admin Timer 
+            if(adminTimer.stopWatchTimer.Enabled)
+            {
+                adminTimer.stopWatchTimer.Enabled = false;
+            }
+            else
+            {
+                adminTimer.stopWatchTimer.Enabled = true;
+            }
+            toggleAdminEnabledWording(adminTimer.stopWatchTimer.Enabled); 
+        }
+
+        private void enableTimerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toggleAdminTimer();
         }
     }
 }
