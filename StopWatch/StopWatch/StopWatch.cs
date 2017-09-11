@@ -132,5 +132,11 @@ namespace StopWatch
         {
             get { return new Uri("https://raw.githubusercontent.com/dpaulson45/StopWatch/UpdateFileBranch/update.xml");  }
         }
+
+
+        private void downloadUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            appUpdater.DoUpdate();
+        }
     }
 }
