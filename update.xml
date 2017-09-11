@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<sharpUpdate>
+	<update appId="StopWatch">
+		<version>1.0.0.1</version>
+		<url></url>
+		<fileName>Setup.msi</fileName>
+		<md5></md5>
+		<description></description>
+		<launchArgs></launchArgs>
+	</update>
+</sharpUpdate>
