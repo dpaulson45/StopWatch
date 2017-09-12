@@ -35,6 +35,7 @@
             this.downloadUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,7 +77,8 @@
             // adminTimerToolStripMenuItem
             // 
             this.adminTimerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enableTimerToolStripMenuItem});
+            this.enableTimerToolStripMenuItem,
+            this.resetTimerToolStripMenuItem});
             this.adminTimerToolStripMenuItem.Name = "adminTimerToolStripMenuItem";
             this.adminTimerToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
             this.adminTimerToolStripMenuItem.Text = "Admin Timer";
@@ -87,6 +89,13 @@
             this.enableTimerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.enableTimerToolStripMenuItem.Text = "Disable Timer";
             this.enableTimerToolStripMenuItem.Click += new System.EventHandler(this.enableTimerToolStripMenuItem_Click);
+            // 
+            // resetTimerToolStripMenuItem
+            // 
+            this.resetTimerToolStripMenuItem.Name = "resetTimerToolStripMenuItem";
+            this.resetTimerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resetTimerToolStripMenuItem.Text = "Reset Timer";
+            this.resetTimerToolStripMenuItem.Click += new System.EventHandler(this.resetTimerToolStripMenuItem_Click);
             // 
             // StopWatch
             // 
@@ -116,6 +125,7 @@
         private System.Windows.Forms.ToolStripMenuItem downloadUpdateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adminTimerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableTimerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetTimerToolStripMenuItem;
     }
 }
 
