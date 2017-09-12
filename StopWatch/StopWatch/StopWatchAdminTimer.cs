@@ -7,13 +7,19 @@ namespace StopWatch
     {
         private TextBox txtBox;
         private TextBox txtBoxAdminTitle; 
-        private Form pForm; 
+        private Form pForm;
+
+        private string AdminDataSave = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+            "\\StopWatch\\AdminData.dat";
+        private string AdminStartTimeFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+            "\\StopWatch\\StopWatchStartTime.dat"; 
         
 
         public StopWatchAdminTimer(Form pForm)
         {
             this.pForm = pForm;
             LoadTextBox();
+            ReadAdminStopWatchData();
         }
 
         private void LoadTextBox()
@@ -56,7 +62,8 @@ namespace StopWatch
         protected override void IncreaseTimers(object s, EventArgs e)
         {
             base.IncreaseTimers(s, e);
-            UpdateAdminTimer(); 
+            UpdateAdminTimer();
+            SaveAdminTimer();
         }
 
         private void UpdateAdminTimer()
@@ -64,6 +71,114 @@ namespace StopWatch
             txtBox.Text = GetLabelTimeString(); 
         }
 
+        private void ReadAdminStopWatchData()
+        {
+            if(ResetAdminTime())
+            {
+                WriteAdminStartTime(); 
+            }
+            else
+            {
+                ReadAdminTime();
+                UpdateAdminTimer();
+            }
+        }
+
+        private void ReadAdminTime()
+        {
+            CheckFile(AdminDataSave);
+            System.IO.TextReader myFile = new System.IO.StreamReader(AdminDataSave);
+            try
+            {
+                sec01 = Convert.ToInt32(myFile.ReadLine());
+                sec10 = Convert.ToInt32(myFile.ReadLine());
+                min01 = Convert.ToInt32(myFile.ReadLine());
+                min10 = Convert.ToInt32(myFile.ReadLine());
+                hour01 = Convert.ToInt32(myFile.ReadLine());
+                hour10 = Convert.ToInt32(myFile.ReadLine());
+            }
+
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            finally
+            {
+                myFile.Close();
+            }
+
+        }
+
+
+        private void SaveAdminTimer()
+        {
+            System.IO.TextWriter myFile = new System.IO.StreamWriter(AdminDataSave);
+            try
+            {
+                myFile.WriteLine(sec01);
+                myFile.WriteLine(sec10);
+                myFile.WriteLine(min01);
+                myFile.WriteLine(min10);
+                myFile.WriteLine(hour01);
+                myFile.WriteLine(hour10);
+            }
+            finally
+            {
+                myFile.Close();
+            }
+        }
+
+        private void CheckFile(string location)
+        {
+            if(!System.IO.File.Exists(location))
+            {
+                System.IO.FileStream fs = System.IO.File.Create(location);
+                fs.Close();
+            }
+        }
+
+        private void WriteAdminStartTime()
+        {
+            CheckFile(AdminStartTimeFile);
+            System.IO.TextWriter myFile = new System.IO.StreamWriter(AdminStartTimeFile);
+            try
+            {
+                myFile.WriteLine(Convert.ToString(DateTime.Now));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            finally
+            {
+                myFile.Close(); 
+            }
+        }
+
+        private bool ResetAdminTime()
+        {
+            bool bResult = true ; 
+            DateTime currentTime = DateTime.Now;
+            DateTime fileTime;
+            CheckFile(AdminStartTimeFile);
+            System.IO.TextReader myFile = new System.IO.StreamReader(AdminStartTimeFile);
+            try
+            {
+                fileTime = Convert.ToDateTime(myFile.ReadLine());
+                if (currentTime.Date == fileTime.Date)
+                    bResult = false; 
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            finally
+            {
+                myFile.Close(); 
+            }
+            return bResult; 
+        }
 
     }
 }

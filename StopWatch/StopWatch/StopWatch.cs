@@ -27,9 +27,9 @@ namespace StopWatch
         {
             InitializeComponent();
             primaryDisplay = new StopWatchPrimaryDisplay(this);
-            adminTimer = new StopWatchAdminTimer(this); 
             LoadStopWatchManager();
             LoadSavedStopWatchData();
+            adminTimer = new StopWatchAdminTimer(this);
             appUpdater = new ApplicationUpdater(this); 
             bgWorker = new BackgroundWorker();
             bgWorker.DoWork += bgWorker_DoWork;
@@ -167,6 +167,11 @@ namespace StopWatch
         private void enableTimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             toggleAdminTimer();
+        }
+
+        private void resetTimerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            adminTimer.ResetTime();
         }
     }
 }
