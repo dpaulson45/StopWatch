@@ -116,6 +116,23 @@ namespace StopWatch
 
         private void CheckForDataFiles()
         {
+            //Need to move the data files to the AppData location in order to avoid permissions issues. https://stackoverflow.com/questions/915210/how-can-i-get-the-path-of-the-current-users-application-data-folder
+            string appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\StopWatch";
+            //Check to see if the directory is there and if we need to create it. 
+            if(!System.IO.Directory.Exists(appDataDirectory))
+            {
+                try
+                {
+                    System.IO.Directory.CreateDirectory(appDataDirectory);
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show(e.Message.ToString());
+                }
+            }
+            //Update the Save Locations
+            PrimarySaveLocation = appDataDirectory + "\\" + PrimarySaveLocation;
+            SecondarySaveLocation = appDataDirectory + "\\" + SecondarySaveLocation; 
             CheckForDataFiles(PrimarySaveLocation);
             CheckForDataFiles(SecondarySaveLocation); 
         }
