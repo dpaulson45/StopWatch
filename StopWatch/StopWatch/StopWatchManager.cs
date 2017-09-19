@@ -149,7 +149,15 @@ namespace StopWatch
         internal override void ResetTime()
         {
             base.ResetTime();
-            txtBox.Text = "";
+            if(txtBox.Text == "")
+            {
+                SaveStopWatchPrimaryData();
+            }
+            else
+            {
+                txtBox.Text = "";
+            }
+            
             UpdateLabelTimeString();
         }
 
