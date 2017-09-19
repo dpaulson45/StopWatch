@@ -10,6 +10,8 @@ namespace StopWatch
         private Button btnReset;
         private Label lbl;
         private TextBox txtBox;
+
+        private string SaveLocation;
         
 
         private int Location_Y;
@@ -28,12 +30,14 @@ namespace StopWatch
         private bool LoadingFiles = true; 
 
         internal StopWatchManager(string StopWatchSetName, 
-            int StartingYLocation, 
+            string SaveLocation,
+            int StartingYLocation,
             Form pform, 
             EventHandler buttonClicks, 
             StopWatchPrimaryDisplay primaryDisplay)
         {
             this.StopWatchSetName = StopWatchSetName;
+            this.SaveLocation = SaveLocation; 
             Location_Y = StartingYLocation;
             this.pform = pform;
             this.primaryDisplay = primaryDisplay; 
@@ -117,7 +121,7 @@ namespace StopWatch
         private void CheckForDataFiles()
         {
             //Need to move the data files to the AppData location in order to avoid permissions issues. https://stackoverflow.com/questions/915210/how-can-i-get-the-path-of-the-current-users-application-data-folder
-            string appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\StopWatch";
+            string appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + SaveLocation;
             //Check to see if the directory is there and if we need to create it. 
             if(!System.IO.Directory.Exists(appDataDirectory))
             {

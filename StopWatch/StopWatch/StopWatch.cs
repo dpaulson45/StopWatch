@@ -20,8 +20,14 @@ namespace StopWatch
         private StopWatchAdminTimer adminTimer;
         private ApplicationUpdater appUpdater;
         private BackgroundWorker bgWorker;
-        private string AppName_AppID = "StopWatch";
-       
+
+#if DEBUG 
+        private string AppName_AppID = "StopWatch-Dev";
+#else
+      private string AppName_AppID = "StopWatch";
+#endif
+
+
 
         public StopWatch()
         {
@@ -29,7 +35,7 @@ namespace StopWatch
             primaryDisplay = new StopWatchPrimaryDisplay(this);
             LoadStopWatchManager();
             LoadSavedStopWatchData();
-            adminTimer = new StopWatchAdminTimer(this);
+            adminTimer = new StopWatchAdminTimer(this, AppName_AppID);
             appUpdater = new ApplicationUpdater(this); 
             bgWorker = new BackgroundWorker();
             bgWorker.DoWork += bgWorker_DoWork;
@@ -58,11 +64,11 @@ namespace StopWatch
         private void LoadStopWatchManager()
         {
             StopWatches = new List<StopWatchManager>();
-            StopWatches.Add(new StopWatchManager("StopWatch1", 100, this, new EventHandler(btnStartStop_Click), primaryDisplay));
-            StopWatches.Add(new StopWatchManager("StopWatch2", 135, this, new EventHandler(btnStartStop_Click), primaryDisplay));
-            StopWatches.Add(new StopWatchManager("StopWatch3", 170, this, new EventHandler(btnStartStop_Click), primaryDisplay));
-            StopWatches.Add(new StopWatchManager("StopWatch4", 205, this, new EventHandler(btnStartStop_Click), primaryDisplay));
-            StopWatches.Add(new StopWatchManager("StopWatch5", 240, this, new EventHandler(btnStartStop_Click), primaryDisplay));
+            StopWatches.Add(new StopWatchManager("StopWatch1", AppName_AppID, 100, this, new EventHandler(btnStartStop_Click), primaryDisplay));
+            StopWatches.Add(new StopWatchManager("StopWatch2", AppName_AppID, 135, this, new EventHandler(btnStartStop_Click), primaryDisplay));
+            StopWatches.Add(new StopWatchManager("StopWatch3", AppName_AppID, 170, this, new EventHandler(btnStartStop_Click), primaryDisplay));
+            StopWatches.Add(new StopWatchManager("StopWatch4", AppName_AppID, 205, this, new EventHandler(btnStartStop_Click), primaryDisplay));
+            StopWatches.Add(new StopWatchManager("StopWatch5", AppName_AppID, 240, this, new EventHandler(btnStartStop_Click), primaryDisplay));
         }
 
         public void btnStartStop_Click(object sender, EventArgs e)

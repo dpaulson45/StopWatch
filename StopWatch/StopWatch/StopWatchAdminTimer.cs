@@ -9,16 +9,18 @@ namespace StopWatch
         private TextBox txtBoxAdminTitle; 
         private Form pForm;
 
-        private string AdminDataSave = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-            "\\StopWatch\\AdminData.dat";
-        private string AdminStartTimeFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-            "\\StopWatch\\StopWatchStartTime.dat"; 
+        private string AdminDataSave;
+        private string AdminStartTimeFile; 
         
 
-        public StopWatchAdminTimer(Form pForm)
+        public StopWatchAdminTimer(Form pForm, string SaveLocation)
         {
             this.pForm = pForm;
             LoadTextBox();
+            AdminDataSave = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                "\\" + SaveLocation + "\\AdminData.dat";
+            AdminStartTimeFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                "\\" + SaveLocation + "\\StopWatchStartTime.dat";
             ReadAdminStopWatchData();
         }
 
