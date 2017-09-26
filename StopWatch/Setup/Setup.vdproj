@@ -46,13 +46,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C6F91F9C6E5144E093C4A50ACD01099F"
+        "OwnerKey" = "8:_E2498AECB50D5CB44285B3504EA6BBD1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E2498AECB50D5CB44285B3504EA6BBD1"
+        "OwnerKey" = "8:_C6F91F9C6E5144E093C4A50ACD01099F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -278,15 +278,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:StopWatch"
-        "ProductCode" = "8:{47540B83-D6E9-41A0-B569-58658CA04634}"
-        "PackageCode" = "8:{D5FBE716-F6B6-45B7-A701-FBE333BB5FDB}"
+        "ProductCode" = "8:{F7EE0488-2EC5-4815-A617-33F9F1B3E2F9}"
+        "PackageCode" = "8:{2A574288-3122-4646-BABC-4467494245B5}"
         "UpgradeCode" = "8:{A42C4959-136C-48F3-8C2E-532B9193007A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.2"
+        "ProductVersion" = "8:1.0.3"
         "Manufacturer" = "8:dpcoding"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
