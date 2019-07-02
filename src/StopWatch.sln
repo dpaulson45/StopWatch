@@ -9,6 +9,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StopWatchTimer", "StopWatchTimer\StopWatchTimer.csproj", "{8DFB7C19-4CC8-4067-A139-4C0DB0C5DF1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StopWatch.Data", "StopWatch.Data\StopWatch.Data.csproj", "{131B26E6-5027-43D0-829B-82A767CD82E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{8DFB7C19-4CC8-4067-A139-4C0DB0C5DF1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DFB7C19-4CC8-4067-A139-4C0DB0C5DF1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DFB7C19-4CC8-4067-A139-4C0DB0C5DF1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{131B26E6-5027-43D0-829B-82A767CD82E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{131B26E6-5027-43D0-829B-82A767CD82E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{131B26E6-5027-43D0-829B-82A767CD82E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{131B26E6-5027-43D0-829B-82A767CD82E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
