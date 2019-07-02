@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ApplicationUpdate; // Application Updater to allow the program to update automatically https://github.com/dpaulson45/ApplicationUpdate/releases 
 using System.Reflection; 
@@ -15,11 +11,15 @@ namespace StopWatch
     public partial class StopWatch : Form, IApplicationUpdate
     {
 
-        private List<StopWatchManager> StopWatches;
-        private StopWatchPrimaryDisplay primaryDisplay;
-        private StopWatchAdminTimer adminTimer;
+        private List<StopWatchManager> stopWatches;
         private ApplicationUpdater appUpdater;
         private BackgroundWorker bgWorker;
+        private string primarySaveDirectory; 
+
+        private int stopWatchInstances = 5;
+
+        private const int startingYLocation = 100;
+        private const int yPadding = 35; 
 
 #if DEBUG 
         private string AppName_AppID = "StopWatch-Dev";
@@ -32,10 +32,23 @@ namespace StopWatch
         public StopWatch()
         {
             InitializeComponent();
-            primaryDisplay = new StopWatchPrimaryDisplay(this);
-            LoadStopWatchManager();
-            LoadSavedStopWatchData();
-            adminTimer = new StopWatchAdminTimer(this, AppName_AppID);
+            primarySaveDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + AppName_AppID;
+
+            if (!System.IO.Directory.Exists(primarySaveDirectory))
+                System.IO.Directory.CreateDirectory(primarySaveDirectory);
+
+            stopWatches = new List<StopWatchManager>();
+            for (int i = 1; i <= stopWatchInstances; i++)
+            {
+                stopWatches.Add(new StopWatchManager("StopWatch" + i,
+                    primarySaveDirectory,
+                    (startingYLocation + ((i - 1) * yPadding)),
+                    this,
+                    lblMainDisplay,
+                    btnStartStop_Click,
+                    btnReset_Click));
+            }
+
             appUpdater = new ApplicationUpdater(this); 
             bgWorker = new BackgroundWorker();
             bgWorker.DoWork += bgWorker_DoWork;
@@ -61,55 +74,41 @@ namespace StopWatch
         }
 
 
-        private void LoadStopWatchManager()
-        {
-            StopWatches = new List<StopWatchManager>();
-            StopWatches.Add(new StopWatchManager("StopWatch1", AppName_AppID, 100, this, new EventHandler(btnStartStop_Click), primaryDisplay));
-            StopWatches.Add(new StopWatchManager("StopWatch2", AppName_AppID, 135, this, new EventHandler(btnStartStop_Click), primaryDisplay));
-            StopWatches.Add(new StopWatchManager("StopWatch3", AppName_AppID, 170, this, new EventHandler(btnStartStop_Click), primaryDisplay));
-            StopWatches.Add(new StopWatchManager("StopWatch4", AppName_AppID, 205, this, new EventHandler(btnStartStop_Click), primaryDisplay));
-            StopWatches.Add(new StopWatchManager("StopWatch5", AppName_AppID, 240, this, new EventHandler(btnStartStop_Click), primaryDisplay));
-        }
-
-        public void btnStartStop_Click(object sender, EventArgs e)
+        protected void btnStartStop_Click(object sender, EventArgs e)
         {
             Button btnSender = (Button)sender;
-            int iCount = 0; 
-            //foreach stopwatch we are going to loop through 
-            //to see if there is a timer enabled, if there is disabled it 
-       
-            foreach(StopWatchManager stopWatch in StopWatches)
+
+            foreach (StopWatchManager stopWatch in stopWatches)
             {
-                if (stopWatch.stopWatchTimer.Enabled)
+                if(stopWatch.stopWatch.displayUpdateTimer.Enabled)
                 {
-                    if (btnSender.Name != (stopWatch.StopWatchSetName + "_StartStop"))
+                    if(btnSender.Name !=(stopWatch.stopWatchSetName + "_Start"))
                     {
-                        //If a timer is enabled and is not the sender we want to disable the timer and change the name of the lbl. 
-                        stopWatch.stopWatchTimer.Enabled = false;
-                        stopWatch.ToggleStartStopBtn();
-                        stopWatch.SaveStopWatchPrimaryData();
-                        stopWatch.UpdateLabelTimeString(); 
+                        stopWatch.stopWatch.StartStop();
+                        stopWatch.SetStartButton();
                     }
-                    adminTimer.stopWatchTimer.Enabled = false;
-                    toggleAdminEnabledWording(false);
                 }
-                else
-                    iCount++; 
             }
-
-            if (iCount == StopWatches.Count)
-                adminTimer.stopWatchTimer.Enabled = true; toggleAdminEnabledWording(true);
-
-           
+                  
         }
 
-        public void LoadSavedStopWatchData()
+        protected void btnReset_Click(object sender, EventArgs e)
         {
-            foreach(StopWatchManager stopWatch in StopWatches)
+            bool timerIsRunning = false;
+            foreach (StopWatchManager stopWatch in stopWatches)
             {
-                stopWatch.LoadSavedData(); 
+                if(stopWatch.stopWatch.displayUpdateTimer.Enabled)
+                {
+                    timerIsRunning = true;
+                    break; 
+                }
+            }
+            if(!timerIsRunning)
+            {
+                lblMainDisplay.Text = "00:00:00";
             }
         }
+
 
         public string ApplicationName
         {
@@ -159,15 +158,7 @@ namespace StopWatch
         private void toggleAdminTimer()
         {
             //If it is enabled, disable it and change wording of Admin Timer 
-            if(adminTimer.stopWatchTimer.Enabled)
-            {
-                adminTimer.stopWatchTimer.Enabled = false;
-            }
-            else
-            {
-                adminTimer.stopWatchTimer.Enabled = true;
-            }
-            toggleAdminEnabledWording(adminTimer.stopWatchTimer.Enabled); 
+
         }
 
         private void enableTimerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -177,7 +168,7 @@ namespace StopWatch
 
         private void resetTimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            adminTimer.ResetTime();
+
         }
     }
 }

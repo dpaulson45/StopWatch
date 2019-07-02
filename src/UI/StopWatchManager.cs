@@ -1,282 +1,158 @@
 ﻿using System;
-using System.Windows.Forms; 
+using System.Windows.Forms;
+using StopWatchTime;
 
 namespace StopWatch
 {
-    class StopWatchManager : StopWatchTimerClass 
+    class StopWatchManager  
     {
-        public string StopWatchSetName;
+        public string stopWatchSetName;
+
+        public StopWatchTimer stopWatch;
+
         private Button btnStartStop;
         private Button btnReset;
-        private Label lbl;
-        private TextBox txtBox;
+        private Button btnCommit;
+        private Label lblCurrentTime;
+        private TextBox tbQuickNotes;
+        private Form mainForm;
+        private Label lblPrimaryDisplay;
 
-        private string SaveLocation;
-        
-
-        private int Location_Y;
-        private int Location_X = 10;
-
+        private int location_Y;
+        private int location_X = 10;
         private const int btnWidth = 45;
         private const int btnHeight = 20; 
 
-        private Form pform;
-
-        private string PrimarySaveLocation, SecondarySaveLocation;
-
-        private EventHandler buttonClicks;
-        private StopWatchPrimaryDisplay primaryDisplay;
-
-        private bool LoadingFiles = true; 
-
         internal StopWatchManager(string StopWatchSetName, 
-            string SaveLocation,
+            string SaveDirectoryPath,
             int StartingYLocation,
-            Form pform, 
-            EventHandler buttonClicks, 
-            StopWatchPrimaryDisplay primaryDisplay)
+            Form form, 
+            Label primaryDisplay,
+            EventHandler StartStopClickEvents,
+            EventHandler ResetClickEvents)
         {
-            this.StopWatchSetName = StopWatchSetName;
-            this.SaveLocation = SaveLocation; 
-            Location_Y = StartingYLocation;
-            this.pform = pform;
-            this.primaryDisplay = primaryDisplay; 
-            PrimarySaveLocation = StopWatchSetName + "_Primary.dat";
-            SecondarySaveLocation = StopWatchSetName + "_Backup.dat";
-            this.buttonClicks = buttonClicks; 
-            LoadButton(); 
+            stopWatchSetName = StopWatchSetName;
+            stopWatch = new StopWatchTimer(SaveDirectoryPath +
+                "\\" +
+                StopWatchSetName +
+                ".dat");
+            location_Y = StartingYLocation;
+            mainForm = form;
+            lblPrimaryDisplay = primaryDisplay;
+            LoadFormInfo(StartStopClickEvents, ResetClickEvents);
+            stopWatch.displayUpdateTimer.Tick += new EventHandler(TimerTickIncrease);
+            UpdateCurrentTimeLabel();
         }
 
-        public void SaveStopWatchPrimaryData()
+        private Button CreateButtonBasics(string name, int location_X_Padding)
         {
-            SaveStopWatchData(PrimarySaveLocation);
-            SaveStopWatchData(SecondarySaveLocation); 
+            Button btn = new Button();
+            btn.Name = stopWatchSetName + "_" + name;
+            btn.Size = new System.Drawing.Size(btnWidth, btnHeight);
+            btn.Margin = new Padding(2, 2, 2, 2);
+            btn.Text = name;
+            btn.UseVisualStyleBackColor = true;
+            btn.Location = new System.Drawing.Point(location_X + location_X_Padding, location_Y);
+
+            return btn;
         }
 
-        private void ReadStopWatchData(string location, out bool bResults)
+        private void LoadFormInfo(EventHandler StartStopClickEvents, EventHandler ResetClickEvents)
         {
-            bResults = true; 
-            System.IO.TextReader myFile = new System.IO.StreamReader(location);
-
-            try
-            {
-                sec01 = Convert.ToInt32(myFile.ReadLine());
-                sec10 = Convert.ToInt32(myFile.ReadLine());
-                min01 = Convert.ToInt32(myFile.ReadLine());
-                min10 = Convert.ToInt32(myFile.ReadLine());
-                hour01 = Convert.ToInt32(myFile.ReadLine());
-                hour10 = Convert.ToInt32(myFile.ReadLine());
-                txtBox.Text = myFile.ReadLine();
-
-            }
-
-            catch (Exception ex)
-            {
-                bResults = false;  
-                MessageBox.Show(ex.Message.ToString());
-            }
-
-            finally
-            {
-                myFile.Close();
-            }
-
-        }
-
-        private void SaveStopWatchData(string location)
-        {
-            System.IO.TextWriter myFile = new System.IO.StreamWriter(location);
-
-            try
-            {
-                myFile.WriteLine(sec01);
-                myFile.WriteLine(sec10);
-                myFile.WriteLine(min01);
-                myFile.WriteLine(min10);
-                myFile.WriteLine(hour01);
-                myFile.WriteLine(hour10);
-                myFile.WriteLine(txtBox.Text); 
-            }
-
-            finally
-            {
-                myFile.Close(); 
-            }
-        }
-
-        public void LoadSavedData()
-        {
-            //First check the data files 
-            CheckForDataFiles();
-            ReadStopWatchData(PrimarySaveLocation, out bool pSuccess);
-            if(!pSuccess)
-            {
-                ReadStopWatchData(SecondarySaveLocation, out pSuccess); 
-            }
-            UpdateLabelTimeString();
-            LoadingFiles = false; 
-        }
-
-
-        private void CheckForDataFiles()
-        {
-            //Need to move the data files to the AppData location in order to avoid permissions issues. https://stackoverflow.com/questions/915210/how-can-i-get-the-path-of-the-current-users-application-data-folder
-            string appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + SaveLocation;
-            //Check to see if the directory is there and if we need to create it. 
-            if(!System.IO.Directory.Exists(appDataDirectory))
-            {
-                try
-                {
-                    System.IO.Directory.CreateDirectory(appDataDirectory);
-                }
-                catch(Exception e)
-                {
-                    MessageBox.Show(e.Message.ToString());
-                }
-            }
-            //Update the Save Locations
-            PrimarySaveLocation = appDataDirectory + "\\" + PrimarySaveLocation;
-            SecondarySaveLocation = appDataDirectory + "\\" + SecondarySaveLocation; 
-            CheckForDataFiles(PrimarySaveLocation);
-            CheckForDataFiles(SecondarySaveLocation); 
-        }
-
-        private void CheckForDataFiles(string checkLocation)
-        {
-            if(!System.IO.File.Exists(checkLocation))
-            {
-                System.IO.FileStream fs = System.IO.File.Create(checkLocation);
-                fs.Close(); 
-            }
-        }
-
-        internal override void ResetTime()
-        {
-            base.ResetTime();
-            if(txtBox.Text == "")
-            {
-                SaveStopWatchPrimaryData();
-            }
-            else
-            {
-                txtBox.Text = "";
-            }
-            
-            UpdateLabelTimeString();
-        }
-
-        public void UpdateLabelTimeString()
-        {
-            lbl.Text = GetLabelTimeString(); 
-        }
-
-        private void LoadButton()
-        {
-            //TextBox 
-            txtBox = new TextBox();
-            txtBox.Name = StopWatchSetName + "_TextBox";
-            txtBox.Size = new System.Drawing.Size(211, 20);
-            txtBox.Margin = new Padding(2, 2, 2, 2);
-            txtBox.Location = new System.Drawing.Point(Location_X, Location_Y);
-            txtBox.TextChanged += new EventHandler(txtBox_TextChanged);
-            pform.Controls.Add(txtBox); 
+            //Quick Notes
+            tbQuickNotes = new TextBox();
+            tbQuickNotes.Name = stopWatchSetName + "_TextBox";
+            tbQuickNotes.Size = new System.Drawing.Size(211, 20);
+            tbQuickNotes.Margin = new Padding(2, 2, 2, 2);
+            tbQuickNotes.Location = new System.Drawing.Point(location_X, location_Y);
+            tbQuickNotes.TextChanged += new EventHandler(tbQuickNotes_TextChange);
+            mainForm.Controls.Add(tbQuickNotes);
 
             //Button Start Stop 
-            btnStartStop = new Button();
-            btnStartStop.Name = StopWatchSetName + "_StartStop";
-            btnStartStop.Size = new System.Drawing.Size(btnWidth, btnHeight);
-            btnStartStop.Margin = new Padding(2, 2, 2, 2);
-            btnStartStop.Text = "Start";
+            btnStartStop = CreateButtonBasics("Start", 230);
             btnStartStop.Click += new EventHandler(btnStartStop_Click);
-            btnStartStop.Click += buttonClicks;
-            
-            btnStartStop.UseVisualStyleBackColor = true;
-            btnStartStop.Location = new System.Drawing.Point(Location_X + 225, Location_Y);
-            pform.Controls.Add(btnStartStop); 
+            btnStartStop.Click += StartStopClickEvents;
+            mainForm.Controls.Add(btnStartStop);
 
             //Button Reset 
-            btnReset = new Button();
-            btnReset.Name = StopWatchSetName + "_Reset";
-            btnReset.Size = new System.Drawing.Size(btnWidth, btnHeight);
-            btnReset.Margin = new Padding(2, 2, 2, 2);
-            btnReset.Text = "Reset";
-            btnReset.Click += new EventHandler(btnReset_Click); 
-            btnReset.UseVisualStyleBackColor = true;
-            btnReset.Location = new System.Drawing.Point(Location_X + 280, Location_Y);
-            pform.Controls.Add(btnReset);
+            btnReset = CreateButtonBasics("Reset", 280);
+            btnReset.Click += new EventHandler(btnReset_Click);
+            btnReset.Click += ResetClickEvents;
+            mainForm.Controls.Add(btnReset);
 
-            //Label 
-            lbl = new Label();
-            lbl.Name = StopWatchSetName + "_Label";
-            lbl.Text = "0:0:0:0"; 
-            lbl.Size = new System.Drawing.Size(135, 14);
-            lbl.Margin = new Padding(2, 0, 2, 0);
-            lbl.Location = new System.Drawing.Point(Location_X + 330, Location_Y);
-            pform.Controls.Add(lbl);
+            //Button Commit
+            btnCommit = CreateButtonBasics("Commit", 330);
+            btnCommit.Click += new EventHandler(btnCommit_Click);
+            mainForm.Controls.Add(btnCommit);
 
-            
-
-            //Construct a timer
-            stopWatchTimer = new Timer();
-            stopWatchTimer.Interval = 1000;
-            stopWatchTimer.Enabled = false;
-            stopWatchTimer.Tick += new System.EventHandler(IncreaseTimers);
+            //Label Current Time
+            lblCurrentTime = new Label();
+            lblCurrentTime.Name = stopWatchSetName + "_Label";
+            lblCurrentTime.Text = "0:0:0:0";
+            lblCurrentTime.Size = new System.Drawing.Size(135, 14);
+            lblCurrentTime.Margin = new Padding(2, 0, 2, 0);
+            lblCurrentTime.Location = new System.Drawing.Point(location_X + 400, location_Y + 5);
+            mainForm.Controls.Add(lblCurrentTime);
 
         }
 
-        protected override void IncreaseTimers(object s, EventArgs e)
-        {
-            base.IncreaseTimers(s, e);
-            UpdateMainDisplay();
-            SaveStopWatchData(PrimarySaveLocation); 
-            
-        }
 
-
-        private void btnStartStop_Click(object s, EventArgs e)
+        // Event Handlers 
+        protected void TimerTickIncrease(object s, EventArgs e)
         {
             UpdateMainDisplay();
-            //If it is enabled, start them
-            if(!stopWatchTimer.Enabled)
-                btnStartStop.Text = "Stop";
-            else
-                btnStartStop.Text = "Start";
-            TimerStartStop();
-            UpdateLabelTimeString(); 
+            UpdateCurrentTimeLabel();
+            stopWatch.SaveStopWatchData(); //Don't like this in the quick update view
         }
-
-        public void ToggleStartStopBtn()
+        private void tbQuickNotes_TextChange(object s, EventArgs e)
         {
-            if (btnStartStop.Text == "Start")
-                btnStartStop.Text = "Stop";
-            else
-                btnStartStop.Text = "Start"; 
+
         }
 
         private void btnReset_Click(object s, EventArgs e)
         {
-            ResetTime();
-            UpdateMainDisplay(); 
-        }
-
-        private void txtBox_TextChanged(object s, EventArgs e)
-        {
-            if (!stopWatchTimer.Enabled && !LoadingFiles)
+            if (stopWatch.displayUpdateTimer.Enabled)
             {
-                SaveStopWatchData(PrimarySaveLocation);
-                SaveStopWatchData(SecondarySaveLocation);
+                stopWatch.Restart();
+            }
+            else
+            {
+                stopWatch.Reset();
+                UpdateCurrentTimeLabel();
             }
         }
 
+        private void btnStartStop_Click(object s, EventArgs e)
+        {
+            if (!stopWatch.displayUpdateTimer.Enabled)
+                btnStartStop.Text = "Stop";
+            else
+                btnStartStop.Text = "Start";
+            stopWatch.StartStop();
+            UpdateCurrentTimeLabel();
+            UpdateMainDisplay();
+        }
+
+        private void btnCommit_Click(object s, EventArgs e)
+        {
+            //InsertForm test = new InsertForm(tbQuickNotes.Text, stopWatch.GetTotalMinutes);
+            //test.Show();
+        }
+
+        //Class Methods 
         private void UpdateMainDisplay()
         {
-            primaryDisplay.txtBxHour10.Text = Convert.ToString(hour10);
-            primaryDisplay.txtBxHour01.Text = Convert.ToString(hour01);
-            primaryDisplay.txtBxMin10.Text = Convert.ToString(min10);
-            primaryDisplay.txtBxMin01.Text = Convert.ToString(min01);
-            primaryDisplay.txtBxSec10.Text = Convert.ToString(sec10);
-            primaryDisplay.txtBxSec01.Text = Convert.ToString(sec01); 
+            lblPrimaryDisplay.Text = stopWatch.GetTime;
+        }
 
+        private void UpdateCurrentTimeLabel()
+        {
+            lblCurrentTime.Text = stopWatch.GetTime;
+        }
+
+        public void SetStartButton()
+        {
+            btnStartStop.Text = "Start";
         }
 
     }

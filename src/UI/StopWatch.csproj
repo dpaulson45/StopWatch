@@ -71,10 +71,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StopWatchAdminTimer.cs" />
     <Compile Include="StopWatchManager.cs" />
-    <Compile Include="StopWatchPrimaryDisplay.cs" />
-    <Compile Include="StopWatchTimerClass.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -111,6 +108,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StopWatchTimer\StopWatchTimer.csproj">
+      <Project>{8dfb7c19-4cc8-4067-a139-4c0db0c5df1a}</Project>
+      <Name>StopWatchTimer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

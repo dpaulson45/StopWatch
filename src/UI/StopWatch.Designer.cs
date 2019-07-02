@@ -36,6 +36,7 @@
             this.adminTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblMainDisplay = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,28 +81,39 @@
             this.enableTimerToolStripMenuItem,
             this.resetTimerToolStripMenuItem});
             this.adminTimerToolStripMenuItem.Name = "adminTimerToolStripMenuItem";
-            this.adminTimerToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
+            this.adminTimerToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.adminTimerToolStripMenuItem.Text = "Admin Timer";
             // 
             // enableTimerToolStripMenuItem
             // 
             this.enableTimerToolStripMenuItem.Name = "enableTimerToolStripMenuItem";
-            this.enableTimerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.enableTimerToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.enableTimerToolStripMenuItem.Text = "Disable Timer";
             this.enableTimerToolStripMenuItem.Click += new System.EventHandler(this.enableTimerToolStripMenuItem_Click);
             // 
             // resetTimerToolStripMenuItem
             // 
             this.resetTimerToolStripMenuItem.Name = "resetTimerToolStripMenuItem";
-            this.resetTimerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resetTimerToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.resetTimerToolStripMenuItem.Text = "Reset Timer";
             this.resetTimerToolStripMenuItem.Click += new System.EventHandler(this.resetTimerToolStripMenuItem_Click);
+            // 
+            // lblMainDisplay
+            // 
+            this.lblMainDisplay.AutoSize = true;
+            this.lblMainDisplay.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold);
+            this.lblMainDisplay.Location = new System.Drawing.Point(12, 24);
+            this.lblMainDisplay.Name = "lblMainDisplay";
+            this.lblMainDisplay.Size = new System.Drawing.Size(222, 65);
+            this.lblMainDisplay.TabIndex = 2;
+            this.lblMainDisplay.Text = "02:02:01";
             // 
             // StopWatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(533, 306);
+            this.Controls.Add(this.lblMainDisplay);
             this.Controls.Add(this.lblUpdate);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -126,6 +138,7 @@
         private System.Windows.Forms.ToolStripMenuItem adminTimerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableTimerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetTimerToolStripMenuItem;
+        private System.Windows.Forms.Label lblMainDisplay;
     }
 }
 
