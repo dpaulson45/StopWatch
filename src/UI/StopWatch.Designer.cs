@@ -104,9 +104,9 @@
             this.lblMainDisplay.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold);
             this.lblMainDisplay.Location = new System.Drawing.Point(12, 24);
             this.lblMainDisplay.Name = "lblMainDisplay";
-            this.lblMainDisplay.Size = new System.Drawing.Size(222, 65);
+            this.lblMainDisplay.Size = new System.Drawing.Size(431, 65);
             this.lblMainDisplay.TabIndex = 2;
-            this.lblMainDisplay.Text = "02:02:01";
+            this.lblMainDisplay.Text = "00:00:00.0000000";
             // 
             // StopWatch
             // 
