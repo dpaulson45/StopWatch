@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using StopWatchTime;
 
@@ -17,6 +18,8 @@ namespace StopWatch
         private TextBox tbQuickNotes;
         private Form mainForm;
         private Label lblPrimaryDisplay;
+        private string tbSaveLocation;
+        private bool initialSave = true;
 
         private int location_Y;
         private int location_X = 10;
@@ -39,6 +42,7 @@ namespace StopWatch
             location_Y = StartingYLocation;
             mainForm = form;
             lblPrimaryDisplay = primaryDisplay;
+            tbSaveLocation = SaveDirectoryPath + "\\" + StopWatchSetName + "_QuickNotes.dat";
             LoadFormInfo(StartStopClickEvents, ResetClickEvents);
             stopWatch.displayUpdateTimer.Tick += new EventHandler(TimerTickIncrease);
             UpdateCurrentTimeLabel();
@@ -80,6 +84,21 @@ namespace StopWatch
             tbQuickNotes.Location = new System.Drawing.Point(location_X, location_Y);
             tbQuickNotes.TextChanged += new EventHandler(tbQuickNotes_TextChange);
             mainForm.Controls.Add(tbQuickNotes);
+
+            if(!File.Exists(tbSaveLocation))
+            {
+                try
+                {
+                    FileStream fileStream = File.Create(tbSaveLocation);
+                    fileStream.Close();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+                
+            }
+            ReadQuickNotes();
 
             //Button Start Stop 
             btnStartStop = CreateButtonBasics("Start", 230);
@@ -123,9 +142,41 @@ namespace StopWatch
             UpdateCurrentTimeLabel();
             stopWatch.SaveStopWatchData(); //Don't like this in the quick update view
         }
+
+        private void ReadQuickNotes()
+        {
+            TextReader textReader = new StreamReader(tbSaveLocation);
+            try
+            {
+                tbQuickNotes.Text = textReader.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            finally
+            {
+                textReader.Close();
+                initialSave = false;
+            }
+        }
         private void tbQuickNotes_TextChange(object s, EventArgs e)
         {
-
+            if (initialSave)
+                return;
+            TextWriter textWriter = new StreamWriter(tbSaveLocation);
+            try
+            {
+                textWriter.WriteLine(tbQuickNotes.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            finally
+            {
+                textWriter.Close();
+            }
         }
 
         private void btnReset_Click(object s, EventArgs e)
