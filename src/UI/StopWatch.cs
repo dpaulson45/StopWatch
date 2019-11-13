@@ -12,6 +12,7 @@ namespace StopWatch
     {
 
         private List<StopWatchManager> stopWatches;
+        private StopWatchManager adminTimer; 
         private ApplicationUpdater appUpdater;
         private BackgroundWorker bgWorker;
         private string primarySaveDirectory; 
@@ -49,6 +50,48 @@ namespace StopWatch
                     btnReset_Click));
             }
 
+            adminTimer = new StopWatchManager("AdminStopWatch",
+                primarySaveDirectory,
+                lblAdminTimer);
+
+            string adminStartTimeLocation = primarySaveDirectory + "\\AdminStartTime.dat";
+            if (!System.IO.File.Exists(adminStartTimeLocation))
+            {
+                System.IO.FileStream fs = System.IO.File.Create(adminStartTimeLocation);
+                fs.Close();
+            }
+            System.IO.TextReader textReader = new System.IO.StreamReader(adminStartTimeLocation);
+            try
+            {
+                if(DateTime.Now.Date == Convert.ToDateTime(textReader.ReadLine()))
+                {
+                    adminTimer.stopWatch.Reset();
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            finally
+            {
+                textReader.Close();
+            }
+            System.IO.TextWriter textWriter = new System.IO.StreamWriter(adminStartTimeLocation);
+            try
+            {
+                textWriter.WriteLine(Convert.ToString(DateTime.Now));
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            finally
+            {
+                textWriter.Close();
+            }
+
+            adminTimer.stopWatch.StartStop();
+
             appUpdater = new ApplicationUpdater(this); 
             bgWorker = new BackgroundWorker();
             bgWorker.DoWork += bgWorker_DoWork;
@@ -82,6 +125,7 @@ namespace StopWatch
             {
                 if(stopWatch.stopWatch.displayUpdateTimer.Enabled)
                 {
+                    //This is for when a user selects a Start/Stop button that isn't currently active.
                     if(btnSender.Name !=(stopWatch.stopWatchSetName + "_Start"))
                     {
                         stopWatch.stopWatch.StartStop();
@@ -89,7 +133,8 @@ namespace StopWatch
                     }
                 }
             }
-                  
+
+            startStopAdminTimer();
         }
 
         protected void btnReset_Click(object sender, EventArgs e)
@@ -154,21 +199,75 @@ namespace StopWatch
                 enableTimerToolStripMenuItem.Text = "Enable Timer";
         }
 
-
-        private void toggleAdminTimer()
+        private void startStopAdminTimer()
         {
-            //If it is enabled, disable it and change wording of Admin Timer 
-
+            bool stopWatchInstanceRunning = false;
+            foreach (StopWatchManager stopWatch in stopWatches)
+            {
+                if (stopWatch.stopWatch.displayUpdateTimer.Enabled)
+                {
+                    stopWatchInstanceRunning = true;
+                    break;
+                }
+            }
+            if (stopWatchInstanceRunning)
+            {
+                if (adminTimer.stopWatch.displayUpdateTimer.Enabled)
+                {
+                    adminTimer.stopWatch.StartStop();
+                }
+            }
+            else
+            {
+                if (!adminTimer.stopWatch.displayUpdateTimer.Enabled)
+                {
+                    adminTimer.stopWatch.StartStop();
+                }
+            }
+            enableTimerToolStripMenuItem.Text = "Disable Timer";
         }
+
 
         private void enableTimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            toggleAdminTimer();
+            bool stopWatchInstanceRunning = false; 
+            foreach (StopWatchManager stopWatch in stopWatches)
+            {
+                if(stopWatch.stopWatch.displayUpdateTimer.Enabled)
+                {
+                    stopWatchInstanceRunning = true;
+                    break; 
+                }
+            }
+            if(!stopWatchInstanceRunning)
+            {
+                if(adminTimer.stopWatch.displayUpdateTimer.Enabled)
+                {
+                    enableTimerToolStripMenuItem.Text = "Enable Timer";
+                }
+                else
+                {
+                    enableTimerToolStripMenuItem.Text = "Disable Timer";
+                }
+                adminTimer.stopWatch.StartStop();
+            }
+            else
+            {
+                enableTimerToolStripMenuItem.Text = "Disable Timer";
+            }
         }
 
         private void resetTimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if(adminTimer.stopWatch.displayUpdateTimer.Enabled)
+            {
+                adminTimer.stopWatch.Restart();
+            }
+            else
+            {
+                adminTimer.stopWatch.Reset();
+                lblAdminTimer.Text = adminTimer.stopWatch.GetTime;
+            }
         }
     }
 }

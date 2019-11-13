@@ -37,6 +37,8 @@
             this.enableTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMainDisplay = new System.Windows.Forms.Label();
+            this.lblAdminTimer = new System.Windows.Forms.Label();
+            this.lblAdminTimeText = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,7 +73,7 @@
             // downloadUpdateToolStripMenuItem
             // 
             this.downloadUpdateToolStripMenuItem.Name = "downloadUpdateToolStripMenuItem";
-            this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.downloadUpdateToolStripMenuItem.Text = "Download Update";
             this.downloadUpdateToolStripMenuItem.Click += new System.EventHandler(this.downloadUpdateToolStripMenuItem_Click);
             // 
@@ -87,14 +89,14 @@
             // enableTimerToolStripMenuItem
             // 
             this.enableTimerToolStripMenuItem.Name = "enableTimerToolStripMenuItem";
-            this.enableTimerToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.enableTimerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.enableTimerToolStripMenuItem.Text = "Disable Timer";
             this.enableTimerToolStripMenuItem.Click += new System.EventHandler(this.enableTimerToolStripMenuItem_Click);
             // 
             // resetTimerToolStripMenuItem
             // 
             this.resetTimerToolStripMenuItem.Name = "resetTimerToolStripMenuItem";
-            this.resetTimerToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.resetTimerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.resetTimerToolStripMenuItem.Text = "Reset Timer";
             this.resetTimerToolStripMenuItem.Click += new System.EventHandler(this.resetTimerToolStripMenuItem_Click);
             // 
@@ -108,11 +110,31 @@
             this.lblMainDisplay.TabIndex = 2;
             this.lblMainDisplay.Text = "00:00:00.0000000";
             // 
+            // lblAdminTimer
+            // 
+            this.lblAdminTimer.AutoSize = true;
+            this.lblAdminTimer.Location = new System.Drawing.Point(407, 24);
+            this.lblAdminTimer.Name = "lblAdminTimer";
+            this.lblAdminTimer.Size = new System.Drawing.Size(94, 13);
+            this.lblAdminTimer.TabIndex = 3;
+            this.lblAdminTimer.Text = "00:00:00.0000000";
+            // 
+            // lblAdminTimeText
+            // 
+            this.lblAdminTimeText.AutoSize = true;
+            this.lblAdminTimeText.Location = new System.Drawing.Point(339, 24);
+            this.lblAdminTimeText.Name = "lblAdminTimeText";
+            this.lblAdminTimeText.Size = new System.Drawing.Size(65, 13);
+            this.lblAdminTimeText.TabIndex = 4;
+            this.lblAdminTimeText.Text = "Admin Time:";
+            // 
             // StopWatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(533, 306);
+            this.Controls.Add(this.lblAdminTimeText);
+            this.Controls.Add(this.lblAdminTimer);
             this.Controls.Add(this.lblMainDisplay);
             this.Controls.Add(this.lblUpdate);
             this.Controls.Add(this.menuStrip1);
@@ -139,6 +161,8 @@
         private System.Windows.Forms.ToolStripMenuItem enableTimerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetTimerToolStripMenuItem;
         private System.Windows.Forms.Label lblMainDisplay;
+        private System.Windows.Forms.Label lblAdminTimer;
+        private System.Windows.Forms.Label lblAdminTimeText;
     }
 }
 

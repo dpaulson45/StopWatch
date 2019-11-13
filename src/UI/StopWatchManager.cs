@@ -44,6 +44,19 @@ namespace StopWatch
             UpdateCurrentTimeLabel();
         }
 
+        internal StopWatchManager(string StopWatchSetName,
+            string SaveDirectoryPath,
+            Label displayLabel)
+        {
+            stopWatchSetName = StopWatchSetName;
+            stopWatch = new StopWatchTimer(SaveDirectoryPath +
+                "\\" +
+                StopWatchSetName +
+                ".dat");
+            lblCurrentTime = displayLabel;
+            stopWatch.displayUpdateTimer.Tick += new EventHandler(TimerTickIncreaseNoMainDisplay);
+        }
+
         private Button CreateButtonBasics(string name, int location_X_Padding)
         {
             Button btn = new Button();
@@ -94,6 +107,12 @@ namespace StopWatch
             lblCurrentTime.Location = new System.Drawing.Point(location_X + 400, location_Y + 5);
             mainForm.Controls.Add(lblCurrentTime);
 
+        }
+
+        protected void TimerTickIncreaseNoMainDisplay(object s, EventArgs e)
+        {
+            UpdateCurrentTimeLabel();
+            stopWatch.SaveStopWatchData();
         }
 
 
