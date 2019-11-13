@@ -120,6 +120,7 @@ namespace StopWatch
                 stopWatch.Reset();
                 UpdateCurrentTimeLabel();
             }
+            stopWatch.SaveStopWatchData();
         }
 
         private void btnStartStop_Click(object s, EventArgs e)
@@ -129,6 +130,7 @@ namespace StopWatch
             else
                 btnStartStop.Text = "Start";
             stopWatch.StartStop();
+            stopWatch.SaveStopWatchData();
             UpdateCurrentTimeLabel();
             UpdateMainDisplay();
         }
