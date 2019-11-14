@@ -224,7 +224,7 @@ namespace StopWatch
                     adminTimer.stopWatch.StartStop();
                 }
             }
-            toggleAdminEnabledWording(false);
+            toggleAdminEnabledWording(true);
         }
 
 
@@ -241,12 +241,12 @@ namespace StopWatch
             }
             if(!stopWatchInstanceRunning)
             {
-                toggleAdminEnabledWording(adminTimer.stopWatch.displayUpdateTimer.Enabled);
+                toggleAdminEnabledWording(!adminTimer.stopWatch.displayUpdateTimer.Enabled);
                 adminTimer.stopWatch.StartStop();
             }
             else
             {
-                toggleAdminEnabledWording(false);
+                toggleAdminEnabledWording(true);
             }
         }
 
