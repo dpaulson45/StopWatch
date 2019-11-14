@@ -63,7 +63,7 @@ namespace StopWatch
             System.IO.TextReader textReader = new System.IO.StreamReader(adminStartTimeLocation);
             try
             {
-                if(DateTime.Now.Date == Convert.ToDateTime(textReader.ReadLine()))
+                if(DateTime.Now.Date != (Convert.ToDateTime(textReader.ReadLine())).Date)
                 {
                     adminTimer.stopWatch.Reset();
                 }
@@ -224,7 +224,7 @@ namespace StopWatch
                     adminTimer.stopWatch.StartStop();
                 }
             }
-            enableTimerToolStripMenuItem.Text = "Disable Timer";
+            toggleAdminEnabledWording(false);
         }
 
 
@@ -241,19 +241,12 @@ namespace StopWatch
             }
             if(!stopWatchInstanceRunning)
             {
-                if(adminTimer.stopWatch.displayUpdateTimer.Enabled)
-                {
-                    enableTimerToolStripMenuItem.Text = "Enable Timer";
-                }
-                else
-                {
-                    enableTimerToolStripMenuItem.Text = "Disable Timer";
-                }
+                toggleAdminEnabledWording(adminTimer.stopWatch.displayUpdateTimer.Enabled);
                 adminTimer.stopWatch.StartStop();
             }
             else
             {
-                enableTimerToolStripMenuItem.Text = "Disable Timer";
+                toggleAdminEnabledWording(false);
             }
         }
 
