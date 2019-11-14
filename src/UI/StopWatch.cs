@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using ApplicationUpdate; // Application Updater to allow the program to update automatically https://github.com/dpaulson45/ApplicationUpdate/releases 
-using System.Reflection; 
+using System.Reflection;
+
+using StopWatch.Data;
 
 namespace StopWatch
 {
@@ -12,22 +14,22 @@ namespace StopWatch
     {
 
         private List<StopWatchManager> stopWatches;
-        private StopWatchManager adminTimer; 
+        private StopWatchManager adminTimer;
         private ApplicationUpdater appUpdater;
         private BackgroundWorker bgWorker;
         private string primarySaveDirectory;
-
+        private string xmlUserSettingsLocation;
+        private XmlUserSettings xmlUserSettings;
+        private StopWatchUserSettings stopWatchUserSettings;
 
         private const bool DefaultDatabaseCommitOption = true;
         private const int DefaultStopWatchInstances = 5;
         private const bool DefaultIncludeMicroseconds = true;
 
-        private int stopWatchInstances = DefaultStopWatchInstances;
-
         private const int startingYLocation = 100;
-        private const int yPadding = 35; 
+        private const int yPadding = 35;
 
-#if DEBUG 
+#if DEBUG
         private string AppName_AppID = "StopWatch-Dev";
 #else
       private string AppName_AppID = "StopWatch";
@@ -43,16 +45,23 @@ namespace StopWatch
             if (!System.IO.Directory.Exists(primarySaveDirectory))
                 System.IO.Directory.CreateDirectory(primarySaveDirectory);
 
+            xmlUserSettingsLocation = primarySaveDirectory + "\\UserSettings.xml";
+            stopWatchUserSettings = new StopWatchUserSettings();
+            xmlUserSettings = new XmlUserSettings(xmlUserSettingsLocation,
+                stopWatchUserSettings);
+
+            LoadUserPreferences();
+
             stopWatches = new List<StopWatchManager>();
-            for (int i = 1; i <= stopWatchInstances; i++)
+            for (int i = 1; i <= stopWatchUserSettings.StopWatchInstances; i++)
             {
                 stopWatches.Add(new StopWatchManager("StopWatch" + i,
                     primarySaveDirectory,
                     (startingYLocation + ((i - 1) * yPadding)),
                     this,
                     lblMainDisplay,
-                    DefaultIncludeMicroseconds,
-                    DefaultDatabaseCommitOption,
+                    stopWatchUserSettings.IncludeMicroseconds,
+                    stopWatchUserSettings.DatabaseCommitOption,
                     btnStartStop_Click,
                     btnReset_Click));
             }
@@ -60,7 +69,7 @@ namespace StopWatch
             adminTimer = new StopWatchManager("AdminStopWatch",
                 primarySaveDirectory,
                 lblAdminTimer,
-                DefaultIncludeMicroseconds);
+                stopWatchUserSettings.IncludeMicroseconds);
 
             string adminStartTimeLocation = primarySaveDirectory + "\\AdminStartTime.dat";
             if (!System.IO.File.Exists(adminStartTimeLocation))
@@ -71,12 +80,12 @@ namespace StopWatch
             System.IO.TextReader textReader = new System.IO.StreamReader(adminStartTimeLocation);
             try
             {
-                if(DateTime.Now.Date != (Convert.ToDateTime(textReader.ReadLine())).Date)
+                if (DateTime.Now.Date != (Convert.ToDateTime(textReader.ReadLine())).Date)
                 {
                     adminTimer.stopWatch.Reset();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString());
             }
@@ -89,7 +98,7 @@ namespace StopWatch
             {
                 textWriter.WriteLine(Convert.ToString(DateTime.Now));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString());
             }
@@ -100,15 +109,34 @@ namespace StopWatch
 
             adminTimer.stopWatch.StartStop();
 
-            appUpdater = new ApplicationUpdater(this); 
+            appUpdater = new ApplicationUpdater(this);
             bgWorker = new BackgroundWorker();
             bgWorker.DoWork += bgWorker_DoWork;
             bgWorker.RunWorkerCompleted += bgWorker_RunWorkerCompleted;
-            bgWorker.RunWorkerAsync(); 
-            lblUpdate.Text = "Checking for updates...."; 
-            
+            bgWorker.RunWorkerAsync();
+            lblUpdate.Text = "Checking for updates....";
+
         }
 
+        private void LoadUserPreferences()
+        {
+            if (!System.IO.File.Exists(xmlUserSettingsLocation))
+            {
+                stopWatchUserSettings.DatabaseCommitOption = DefaultDatabaseCommitOption;
+                stopWatchUserSettings.IncludeMicroseconds = DefaultIncludeMicroseconds;
+                stopWatchUserSettings.StopWatchInstances = DefaultStopWatchInstances;
+                SaveUserPreferences();
+            }
+            else
+            {
+                stopWatchUserSettings = xmlUserSettings.ReadFromFile() as StopWatchUserSettings;
+            }
+        }
+
+        private void SaveUserPreferences()
+        {
+            xmlUserSettings.SaveToFile(stopWatchUserSettings);
+        }
 
         void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
