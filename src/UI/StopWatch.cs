@@ -15,9 +15,14 @@ namespace StopWatch
         private StopWatchManager adminTimer; 
         private ApplicationUpdater appUpdater;
         private BackgroundWorker bgWorker;
-        private string primarySaveDirectory; 
+        private string primarySaveDirectory;
 
-        private int stopWatchInstances = 5;
+
+        private const bool DefaultDatabaseCommitOption = true;
+        private const int DefaultStopWatchInstances = 5;
+        private const bool DefaultIncludeMicroseconds = true;
+
+        private int stopWatchInstances = DefaultStopWatchInstances;
 
         private const int startingYLocation = 100;
         private const int yPadding = 35; 
@@ -46,13 +51,16 @@ namespace StopWatch
                     (startingYLocation + ((i - 1) * yPadding)),
                     this,
                     lblMainDisplay,
+                    DefaultIncludeMicroseconds,
+                    DefaultDatabaseCommitOption,
                     btnStartStop_Click,
                     btnReset_Click));
             }
 
             adminTimer = new StopWatchManager("AdminStopWatch",
                 primarySaveDirectory,
-                lblAdminTimer);
+                lblAdminTimer,
+                DefaultIncludeMicroseconds);
 
             string adminStartTimeLocation = primarySaveDirectory + "\\AdminStartTime.dat";
             if (!System.IO.File.Exists(adminStartTimeLocation))

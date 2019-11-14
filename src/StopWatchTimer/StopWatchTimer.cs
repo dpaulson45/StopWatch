@@ -9,13 +9,14 @@ namespace StopWatchTime
         public Timer displayUpdateTimer;
         private Stopwatch stopWatch;
         private TimeSpan loadedTimeSpan;
-        private string primarySaveLocation; 
+        private string primarySaveLocation;
+        private bool includeMicroseconds;
 
         public string GetTime
         {
             get
             {
-                return (Convert.ToString(stopWatch.Elapsed.Add(loadedTimeSpan)));
+                return includeMicroseconds ? Convert.ToString(stopWatch.Elapsed.Add(loadedTimeSpan)) : Convert.ToString(stopWatch.Elapsed.Add(loadedTimeSpan)).Split('.')[0];
             }
         }
 
@@ -31,8 +32,10 @@ namespace StopWatchTime
             }
         }
 
-        public StopWatchTimer(string SaveFullPath)
+        public StopWatchTimer(string SaveFullPath,
+            bool IncludeMicroseconds)
         {
+            includeMicroseconds = IncludeMicroseconds;
             displayUpdateTimer = new Timer();
             stopWatch = new Stopwatch();
             primarySaveLocation = SaveFullPath;

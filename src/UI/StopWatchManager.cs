@@ -24,21 +24,27 @@ namespace StopWatch
         private int location_Y;
         private int location_X = 10;
         private const int btnWidth = 45;
-        private const int btnHeight = 20; 
+        private const int btnHeight = 20;
+
+        private bool databaseCommitOption; 
 
         internal StopWatchManager(string StopWatchSetName, 
             string SaveDirectoryPath,
             int StartingYLocation,
             Form form, 
             Label primaryDisplay,
+            bool IncludeMicroseconds,
+            bool DatabaseCommitOption,
             EventHandler StartStopClickEvents,
             EventHandler ResetClickEvents)
         {
             stopWatchSetName = StopWatchSetName;
+            databaseCommitOption = DatabaseCommitOption;
             stopWatch = new StopWatchTimer(SaveDirectoryPath +
                 "\\" +
                 StopWatchSetName +
-                ".dat");
+                ".dat", 
+                IncludeMicroseconds);
             location_Y = StartingYLocation;
             mainForm = form;
             lblPrimaryDisplay = primaryDisplay;
@@ -50,22 +56,24 @@ namespace StopWatch
 
         internal StopWatchManager(string StopWatchSetName,
             string SaveDirectoryPath,
-            Label displayLabel)
+            Label displayLabel,
+            bool IncludeMicroseconds)
         {
             stopWatchSetName = StopWatchSetName;
             stopWatch = new StopWatchTimer(SaveDirectoryPath +
                 "\\" +
                 StopWatchSetName +
-                ".dat");
+                ".dat",
+                IncludeMicroseconds);
             lblCurrentTime = displayLabel;
             stopWatch.displayUpdateTimer.Tick += new EventHandler(TimerTickIncreaseNoMainDisplay);
         }
 
-        private Button CreateButtonBasics(string name, int location_X_Padding)
+        private Button CreateButtonBasics(string name, int location_X_Padding, int widthPadding = 0)
         {
             Button btn = new Button();
             btn.Name = stopWatchSetName + "_" + name;
-            btn.Size = new System.Drawing.Size(btnWidth, btnHeight);
+            btn.Size = new System.Drawing.Size(btnWidth + widthPadding, btnHeight);
             btn.Margin = new Padding(2, 2, 2, 2);
             btn.Text = name;
             btn.UseVisualStyleBackColor = true;
@@ -111,11 +119,14 @@ namespace StopWatch
             btnReset.Click += new EventHandler(btnReset_Click);
             btnReset.Click += ResetClickEvents;
             mainForm.Controls.Add(btnReset);
-
-            //Button Commit
-            btnCommit = CreateButtonBasics("Commit", 330);
-            btnCommit.Click += new EventHandler(btnCommit_Click);
-            mainForm.Controls.Add(btnCommit);
+            
+            if(databaseCommitOption)
+            {
+                //Button Commit
+                btnCommit = CreateButtonBasics("Commit", 330, 4);
+                btnCommit.Click += new EventHandler(btnCommit_Click);
+                mainForm.Controls.Add(btnCommit);
+            }
 
             //Label Current Time
             lblCurrentTime = new Label();
