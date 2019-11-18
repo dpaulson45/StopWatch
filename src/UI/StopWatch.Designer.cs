@@ -39,6 +39,7 @@
             this.lblMainDisplay = new System.Windows.Forms.Label();
             this.lblAdminTimer = new System.Windows.Forms.Label();
             this.lblAdminTimeText = new System.Windows.Forms.Label();
+            this.commitAdminTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,7 +74,7 @@
             // downloadUpdateToolStripMenuItem
             // 
             this.downloadUpdateToolStripMenuItem.Name = "downloadUpdateToolStripMenuItem";
-            this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.downloadUpdateToolStripMenuItem.Text = "Download Update";
             this.downloadUpdateToolStripMenuItem.Click += new System.EventHandler(this.downloadUpdateToolStripMenuItem_Click);
             // 
@@ -81,7 +82,8 @@
             // 
             this.adminTimerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.enableTimerToolStripMenuItem,
-            this.resetTimerToolStripMenuItem});
+            this.resetTimerToolStripMenuItem,
+            this.commitAdminTimeToolStripMenuItem});
             this.adminTimerToolStripMenuItem.Name = "adminTimerToolStripMenuItem";
             this.adminTimerToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.adminTimerToolStripMenuItem.Text = "Admin Timer";
@@ -89,14 +91,14 @@
             // enableTimerToolStripMenuItem
             // 
             this.enableTimerToolStripMenuItem.Name = "enableTimerToolStripMenuItem";
-            this.enableTimerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.enableTimerToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.enableTimerToolStripMenuItem.Text = "Disable Timer";
             this.enableTimerToolStripMenuItem.Click += new System.EventHandler(this.enableTimerToolStripMenuItem_Click);
             // 
             // resetTimerToolStripMenuItem
             // 
             this.resetTimerToolStripMenuItem.Name = "resetTimerToolStripMenuItem";
-            this.resetTimerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.resetTimerToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.resetTimerToolStripMenuItem.Text = "Reset Timer";
             this.resetTimerToolStripMenuItem.Click += new System.EventHandler(this.resetTimerToolStripMenuItem_Click);
             // 
@@ -127,6 +129,13 @@
             this.lblAdminTimeText.Size = new System.Drawing.Size(65, 13);
             this.lblAdminTimeText.TabIndex = 4;
             this.lblAdminTimeText.Text = "Admin Time:";
+            // 
+            // commitAdminTimeToolStripMenuItem
+            // 
+            this.commitAdminTimeToolStripMenuItem.Name = "commitAdminTimeToolStripMenuItem";
+            this.commitAdminTimeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.commitAdminTimeToolStripMenuItem.Text = "Commit Admin Time";
+            this.commitAdminTimeToolStripMenuItem.Click += new System.EventHandler(this.CommitAdminTimeToolStripMenuItem_Click);
             // 
             // StopWatch
             // 
@@ -163,6 +172,7 @@
         private System.Windows.Forms.Label lblMainDisplay;
         private System.Windows.Forms.Label lblAdminTimer;
         private System.Windows.Forms.Label lblAdminTimeText;
+        private System.Windows.Forms.ToolStripMenuItem commitAdminTimeToolStripMenuItem;
     }
 }
 

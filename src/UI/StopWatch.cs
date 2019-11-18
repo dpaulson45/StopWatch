@@ -7,6 +7,7 @@ using ApplicationUpdate; // Application Updater to allow the program to update a
 using System.Reflection;
 
 using StopWatch.Data;
+using StopWatch.TimeTracker;
 
 namespace StopWatch
 {
@@ -297,6 +298,13 @@ namespace StopWatch
                 adminTimer.stopWatch.Reset();
                 lblAdminTimer.Text = adminTimer.stopWatch.GetTime;
             }
+        }
+
+        private void CommitAdminTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InsertForm test = new InsertForm(primarySaveDirectory,
+                adminTimer.stopWatch.GetTotalMinutes);
+            test.Show();
         }
     }
 }

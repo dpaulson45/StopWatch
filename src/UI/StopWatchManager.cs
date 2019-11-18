@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using StopWatchTime;
+using StopWatch.TimeTracker;
 
 namespace StopWatch
 {
@@ -19,6 +20,7 @@ namespace StopWatch
         private Form mainForm;
         private Label lblPrimaryDisplay;
         private string tbSaveLocation;
+        private string saveDirectoryPath;
         private bool initialSave = true;
 
         private int location_Y;
@@ -40,6 +42,7 @@ namespace StopWatch
         {
             stopWatchSetName = StopWatchSetName;
             databaseCommitOption = DatabaseCommitOption;
+            saveDirectoryPath = SaveDirectoryPath;
             stopWatch = new StopWatchTimer(SaveDirectoryPath +
                 "\\" +
                 StopWatchSetName +
@@ -218,8 +221,10 @@ namespace StopWatch
 
         private void btnCommit_Click(object s, EventArgs e)
         {
-            //InsertForm test = new InsertForm(tbQuickNotes.Text, stopWatch.GetTotalMinutes);
-            //test.Show();
+            InsertForm test = new InsertForm(saveDirectoryPath,  
+                stopWatch.GetTotalMinutes,
+                tbQuickNotes.Text);
+            test.Show();
         }
 
         //Class Methods 
