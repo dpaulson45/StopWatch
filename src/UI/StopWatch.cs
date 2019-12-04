@@ -302,9 +302,12 @@ namespace StopWatch
 
         private void CommitAdminTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InsertForm test = new InsertForm(primarySaveDirectory,
+            InsertForm insertForm = new InsertForm(primarySaveDirectory,
                 adminTimer.stopWatch.GetTotalMinutes);
-            test.Show();
+            if(insertForm.ShowDialog() == DialogResult.OK)
+            {
+                adminTimer.stopWatch.Restart();
+            }
         }
     }
 }

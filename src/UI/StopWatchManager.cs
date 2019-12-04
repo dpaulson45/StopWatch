@@ -174,6 +174,22 @@ namespace StopWatch
                 initialSave = false;
             }
         }
+
+        private void ResetTimerAndNotes()
+        {
+            if (stopWatch.displayUpdateTimer.Enabled)
+            {
+                stopWatch.Restart();
+            }
+            else
+            {
+                stopWatch.Reset();
+                UpdateCurrentTimeLabel();
+            }
+            tbQuickNotes.Text = "";
+            stopWatch.SaveStopWatchData();
+        }
+
         private void tbQuickNotes_TextChange(object s, EventArgs e)
         {
             if (initialSave)
@@ -195,16 +211,7 @@ namespace StopWatch
 
         private void btnReset_Click(object s, EventArgs e)
         {
-            if (stopWatch.displayUpdateTimer.Enabled)
-            {
-                stopWatch.Restart();
-            }
-            else
-            {
-                stopWatch.Reset();
-                UpdateCurrentTimeLabel();
-            }
-            stopWatch.SaveStopWatchData();
+            ResetTimerAndNotes();
         }
 
         private void btnStartStop_Click(object s, EventArgs e)
@@ -221,10 +228,13 @@ namespace StopWatch
 
         private void btnCommit_Click(object s, EventArgs e)
         {
-            InsertForm test = new InsertForm(saveDirectoryPath,  
+            InsertForm insertForm = new InsertForm(saveDirectoryPath,
                 stopWatch.GetTotalMinutes,
                 tbQuickNotes.Text);
-            test.Show();
+            if (insertForm.ShowDialog() == DialogResult.OK)
+            {
+                ResetTimerAndNotes();
+            }
         }
 
         //Class Methods 

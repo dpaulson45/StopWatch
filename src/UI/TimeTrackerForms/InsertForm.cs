@@ -96,8 +96,20 @@ namespace StopWatch.TimeTracker
                 TimeWorkedAmount = Convert.ToInt32(tbTimeAmount.Text),
                 WorkedDate = dtDateWorked.Text
             };
-            SqliteDataAccess.SaveLaborEntry(timeTracker);
-            this.Close();
+
+            try
+            {
+                SqliteDataAccess.SaveLaborEntry(timeTracker);
+                this.DialogResult = DialogResult.OK;
+            }
+            catch
+            {
+                this.DialogResult = DialogResult.Abort;
+            }
+            finally
+            {
+                this.Close();
+            }
         }
     }
 
