@@ -102,9 +102,10 @@ namespace StopWatch.TimeTracker
                 SqliteDataAccess.SaveLaborEntry(timeTracker);
                 this.DialogResult = DialogResult.OK;
             }
-            catch
+            catch(Exception ex)
             {
                 this.DialogResult = DialogResult.Abort;
+                MessageBox.Show(ex.Message.ToString());
             }
             finally
             {

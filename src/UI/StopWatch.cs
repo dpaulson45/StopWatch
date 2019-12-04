@@ -53,6 +53,9 @@ namespace StopWatch
 
             LoadUserPreferences();
 
+            SqliteDatabase.ReadySqliteDatabase(primarySaveDirectory, "TimeTracker.db");
+            SqliteDataAccess.DefaultConnectionString = "Data Source=" + System.IO.Path.Combine(primarySaveDirectory, "TimeTracker.db");
+
             stopWatches = new List<StopWatchManager>();
             for (int i = 1; i <= stopWatchUserSettings.StopWatchInstances; i++)
             {

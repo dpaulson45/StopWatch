@@ -7,9 +7,10 @@ namespace StopWatch.Data
 {
     public class SqliteDataAccess
     {
+        public static string DefaultConnectionString = ".\\WrongLocation.db";
         public static void SaveLaborEntry(TimeTrackerModel AddSaveLaborEntry)
         {
-            using (IDbConnection connection = new SQLiteConnection(LoadConnectionString()))
+            using (IDbConnection connection = new SQLiteConnection(DefaultConnectionString))
             {
                 connection.Execute("insert into TimeTracker (TimeType, SubGroupTimeType, Notes, WorkedDate, TimeWorkedAmount, DateTimeEntered) values (@TimeType, @SubGroupTimeType, @Notes, @WorkedDate, @TimeWorkedAmount, @DateTimeEntered)", AddSaveLaborEntry); 
             }
