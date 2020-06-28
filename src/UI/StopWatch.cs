@@ -312,5 +312,15 @@ namespace StopWatch
                 adminTimer.stopWatch.Restart();
             }
         }
+
+        private void StopWatchInstancesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TimeDisplayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

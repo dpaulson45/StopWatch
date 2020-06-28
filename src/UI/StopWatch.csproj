@@ -82,6 +82,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditUserSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditUserSettingsForm.Designer.cs">
+      <DependentUpon>EditUserSettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="StopWatch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +97,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StopWatchManager.cs" />
+<<<<<<< Updated upstream
     <Compile Include="StopWatchUserSettings.cs" />
     <Compile Include="TimeTrackerForms\EditTimeTypeForm.cs">
       <SubType>Form</SubType>
@@ -104,6 +111,12 @@
     <Compile Include="TimeTrackerForms\InsertForm.Designer.cs">
       <DependentUpon>InsertForm.cs</DependentUpon>
     </Compile>
+=======
+    <Compile Include="UserSettingsModel.cs" />
+    <EmbeddedResource Include="EditUserSettingsForm.resx">
+      <DependentUpon>EditUserSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+>>>>>>> Stashed changes
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

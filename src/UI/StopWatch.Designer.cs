@@ -37,9 +37,15 @@
             this.enableTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMainDisplay = new System.Windows.Forms.Label();
+<<<<<<< Updated upstream
             this.lblAdminTimer = new System.Windows.Forms.Label();
             this.lblAdminTimeText = new System.Windows.Forms.Label();
             this.commitAdminTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+=======
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopWatchInstancesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timeDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+>>>>>>> Stashed changes
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +62,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
             this.adminTimerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -74,7 +81,7 @@
             // downloadUpdateToolStripMenuItem
             // 
             this.downloadUpdateToolStripMenuItem.Name = "downloadUpdateToolStripMenuItem";
-            this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.downloadUpdateToolStripMenuItem.Text = "Download Update";
             this.downloadUpdateToolStripMenuItem.Click += new System.EventHandler(this.downloadUpdateToolStripMenuItem_Click);
             // 
@@ -137,6 +144,29 @@
             this.commitAdminTimeToolStripMenuItem.Text = "Commit Admin Time";
             this.commitAdminTimeToolStripMenuItem.Click += new System.EventHandler(this.CommitAdminTimeToolStripMenuItem_Click);
             // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stopWatchInstancesToolStripMenuItem,
+            this.timeDisplayToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // stopWatchInstancesToolStripMenuItem
+            // 
+            this.stopWatchInstancesToolStripMenuItem.Name = "stopWatchInstancesToolStripMenuItem";
+            this.stopWatchInstancesToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.stopWatchInstancesToolStripMenuItem.Text = "StopWatch Instances";
+            this.stopWatchInstancesToolStripMenuItem.Click += new System.EventHandler(this.StopWatchInstancesToolStripMenuItem_Click);
+            // 
+            // timeDisplayToolStripMenuItem
+            // 
+            this.timeDisplayToolStripMenuItem.Name = "timeDisplayToolStripMenuItem";
+            this.timeDisplayToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.timeDisplayToolStripMenuItem.Text = "Time Display";
+            this.timeDisplayToolStripMenuItem.Click += new System.EventHandler(this.TimeDisplayToolStripMenuItem_Click);
+            // 
             // StopWatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -170,9 +200,15 @@
         private System.Windows.Forms.ToolStripMenuItem enableTimerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetTimerToolStripMenuItem;
         private System.Windows.Forms.Label lblMainDisplay;
+<<<<<<< Updated upstream
         private System.Windows.Forms.Label lblAdminTimer;
         private System.Windows.Forms.Label lblAdminTimeText;
         private System.Windows.Forms.ToolStripMenuItem commitAdminTimeToolStripMenuItem;
+=======
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopWatchInstancesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem timeDisplayToolStripMenuItem;
+>>>>>>> Stashed changes
     }
 }
 
