@@ -80,7 +80,7 @@
             this.downloadUpdateToolStripMenuItem.Name = "downloadUpdateToolStripMenuItem";
             this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.downloadUpdateToolStripMenuItem.Text = "Download Update";
-            this.downloadUpdateToolStripMenuItem.Click += new System.EventHandler(this.downloadUpdateToolStripMenuItem_Click);
+            this.downloadUpdateToolStripMenuItem.Click += new System.EventHandler(this.DownloadUpdateToolStripMenuItem_Click);
             // 
             // adminTimerToolStripMenuItem
             // 
@@ -97,14 +97,14 @@
             this.enableTimerToolStripMenuItem.Name = "enableTimerToolStripMenuItem";
             this.enableTimerToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.enableTimerToolStripMenuItem.Text = "Disable Timer";
-            this.enableTimerToolStripMenuItem.Click += new System.EventHandler(this.enableTimerToolStripMenuItem_Click);
+            this.enableTimerToolStripMenuItem.Click += new System.EventHandler(this.EnableTimerToolStripMenuItem_Click);
             // 
             // resetTimerToolStripMenuItem
             // 
             this.resetTimerToolStripMenuItem.Name = "resetTimerToolStripMenuItem";
             this.resetTimerToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.resetTimerToolStripMenuItem.Text = "Reset Timer";
-            this.resetTimerToolStripMenuItem.Click += new System.EventHandler(this.resetTimerToolStripMenuItem_Click);
+            this.resetTimerToolStripMenuItem.Click += new System.EventHandler(this.ResetTimerToolStripMenuItem_Click);
             // 
             // lblMainDisplay
             // 

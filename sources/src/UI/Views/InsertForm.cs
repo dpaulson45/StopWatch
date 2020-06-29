@@ -1,45 +1,60 @@
 ﻿using System;
 using System.Windows.Forms;
 using StopWatch.Data.Services;
+using StopWatch.UI.Models;
 
 namespace StopWatch.UI.Views
 {
+    /// <summary>
+    /// Insert Form.
+    /// </summary>
     public partial class InsertForm : Form
     {
         private const string FileName = "InsertFormUserSettings.xml";
         private const string DefaultTimeType = "Case,Project,Event,General";
         private string fileLocation;
 
-        private XmlUserSettings XmlUserSettings;
+        private XmlUserSettings xmlUserSettings;
         private InsertFormUserSettings insertFormUserSettings;
 
-        private string FileLocation { get { return fileLocation; } set { fileLocation = value + "\\" + FileName; } }
-
-        public InsertForm(string SaveDirectory)
+        public InsertForm(string saveDirectory)
         {
-            FileLocation = SaveDirectory;
+            FileLocation = saveDirectory;
             LoadForm();
         }
 
-        public InsertForm(string SaveDirectory, int Time, string Notes = null)
+        public InsertForm(string saveDirectory, int time, string notes = null)
         {
-            FileLocation = SaveDirectory;
+            FileLocation = saveDirectory;
             LoadForm();
-            tbNotes.Text = Notes;
-            tbTimeAmount.Text = Time.ToString();
+            tbNotes.Text = notes;
+            tbTimeAmount.Text = time.ToString();
+        }
+
+        private string FileLocation
+        {
+            get
+            {
+                return fileLocation;
+            }
+
+            set
+            {
+                fileLocation = value + "\\" + FileName;
+            }
         }
 
         private void LoadForm()
         {
             InitializeComponent();
-            XmlUserSettings = new XmlUserSettings(FileLocation,
-                (insertFormUserSettings = new InsertFormUserSettings()));
+            xmlUserSettings = new XmlUserSettings(
+                FileLocation,
+                insertFormUserSettings = new InsertFormUserSettings());
             LoaduserPreferences();
         }
 
         private void LoaduserPreferences()
         {
-
             if (!System.IO.File.Exists(FileLocation))
             {
                 insertFormUserSettings.TimeType = DefaultTimeType;
@@ -47,7 +62,7 @@ namespace StopWatch.UI.Views
             }
             else
             {
-                insertFormUserSettings = XmlUserSettings.ReadFromFile() as InsertFormUserSettings;
+                insertFormUserSettings = xmlUserSettings.ReadFromFile() as InsertFormUserSettings;
             }
 
             UpdateComboBoxTimeType();
@@ -55,7 +70,7 @@ namespace StopWatch.UI.Views
 
         private void SaveuserPreferences()
         {
-            XmlUserSettings.SaveToFile(insertFormUserSettings);
+            xmlUserSettings.SaveToFile(insertFormUserSettings);
         }
 
         private void UpdateComboBoxTimeType()
@@ -70,7 +85,7 @@ namespace StopWatch.UI.Views
             editTimeForm.ShowDialog();
 
             object[] timeTypes = editTimeForm.GetTimeTypeList;
-            string timeTypesAdd = "";
+            string timeTypesAdd = string.Empty;
             foreach (object timeType in timeTypes)
             {
                 timeTypesAdd += timeType.ToString();
@@ -94,7 +109,7 @@ namespace StopWatch.UI.Views
                 Notes = tbNotes.Text,
                 SubGroupTimeType = tbSubGroupTimeType.Text,
                 TimeWorkedAmount = Convert.ToInt32(tbTimeAmount.Text),
-                WorkedDate = dtDateWorked.Text
+                WorkedDate = dtDateWorked.Text,
             };
 
             try
@@ -112,10 +127,5 @@ namespace StopWatch.UI.Views
                 this.Close();
             }
         }
-    }
-
-    public class InsertFormUserSettings
-    {
-        public string TimeType { get; set; }
     }
 }

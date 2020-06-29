@@ -4,51 +4,55 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
-using StopWatch.UI.Models;
-using ApplicationUpdate; // Application Updater to allow the program to update automatically https://github.com/dpaulson45/ApplicationUpdate/releases 
-using StopWatch.Data.Services;
+using ApplicationUpdate; // Application Updater to allow the program to update automatically https://github.com/dpaulson45/ApplicationUpdate/releases
 using StopWatch.Data.Models;
-
+using StopWatch.Data.Services;
+using StopWatch.UI.Models;
 
 namespace StopWatch.UI.Views
 {
+    /// <summary>
+    /// Main Windows Form.
+    /// </summary>
     public partial class MainWindow : Form, IApplicationUpdate
     {
-        private List<StopWatchManager> stopWatches;
-        private StopWatchManager adminTimer;
-        private ApplicationUpdater appUpdater;
-        private BackgroundWorker bgWorker;
-        private string primarySaveDirectory;
-        private string xmlUserSettingsLocation;
-        private XmlUserSettings xmlUserSettings;
-        private UserSettings stopWatchUserSettings;
-
         private const bool DefaultDatabaseCommitOption = true;
         private const int DefaultStopWatchInstances = 5;
         private const bool DefaultIncludeMicroseconds = true;
 
-        private const int startingYLocation = 100;
-        private const int yPadding = 35;
+        private const int StartingYLocation = 100;
+        private const int YPadding = 35;
+
+        private readonly List<StopWatchManager> stopWatches;
+        private readonly StopWatchManager adminTimer;
+        private readonly ApplicationUpdater appUpdater;
+        private readonly BackgroundWorker bgWorker;
+        private readonly string primarySaveDirectory;
+        private readonly string xmlUserSettingsLocation;
+        private readonly XmlUserSettings xmlUserSettings;
 
 #if DEBUG
-        private string AppName_AppID = "StopWatch-Dev";
+        private readonly string appNameAppID = "StopWatch-Dev";
 #else
-      private string AppName_AppID = "StopWatch";
+      private readonly string appNameAppID = "StopWatch";
 #endif
 
-
+        private UserSettings stopWatchUserSettings;
 
         public MainWindow()
         {
             InitializeComponent();
-            primarySaveDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + AppName_AppID;
+            primarySaveDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + appNameAppID;
 
             if (!System.IO.Directory.Exists(primarySaveDirectory))
+            {
                 System.IO.Directory.CreateDirectory(primarySaveDirectory);
+            }
 
             xmlUserSettingsLocation = primarySaveDirectory + "\\UserSettings.xml";
             stopWatchUserSettings = new UserSettings();
-            xmlUserSettings = new XmlUserSettings(xmlUserSettingsLocation,
+            xmlUserSettings = new XmlUserSettings(
+                xmlUserSettingsLocation,
                 stopWatchUserSettings);
 
             LoadUserPreferences();
@@ -59,18 +63,20 @@ namespace StopWatch.UI.Views
             stopWatches = new List<StopWatchManager>();
             for (int i = 1; i <= stopWatchUserSettings.StopWatchInstances; i++)
             {
-                stopWatches.Add(new StopWatchManager("StopWatch" + i,
+                stopWatches.Add(new StopWatchManager(
+                    "StopWatch" + i,
                     primarySaveDirectory,
-                    (startingYLocation + ((i - 1) * yPadding)),
+                    StartingYLocation + ((i - 1) * YPadding),
                     this,
                     lblMainDisplay,
                     stopWatchUserSettings.IncludeMicroseconds,
                     stopWatchUserSettings.DatabaseCommitOption,
-                    btnStartStop_Click,
-                    btnReset_Click));
+                    BtnStartStop_Click,
+                    BtnReset_Click));
             }
 
-            adminTimer = new StopWatchManager("AdminStopWatch",
+            adminTimer = new StopWatchManager(
+                "AdminStopWatch",
                 primarySaveDirectory,
                 lblAdminTimer,
                 stopWatchUserSettings.IncludeMicroseconds);
@@ -81,12 +87,13 @@ namespace StopWatch.UI.Views
                 System.IO.FileStream fs = System.IO.File.Create(adminStartTimeLocation);
                 fs.Close();
             }
+
             System.IO.TextReader textReader = new System.IO.StreamReader(adminStartTimeLocation);
             try
             {
-                if (DateTime.Now.Date != (Convert.ToDateTime(textReader.ReadLine())).Date)
+                if (DateTime.Now.Date != Convert.ToDateTime(textReader.ReadLine()).Date)
                 {
-                    adminTimer.stopWatch.Reset();
+                    adminTimer.StopWatch.Reset();
                 }
             }
             catch (Exception ex)
@@ -97,6 +104,7 @@ namespace StopWatch.UI.Views
             {
                 textReader.Close();
             }
+
             System.IO.TextWriter textWriter = new System.IO.StreamWriter(adminStartTimeLocation);
             try
             {
@@ -111,98 +119,24 @@ namespace StopWatch.UI.Views
                 textWriter.Close();
             }
 
-            adminTimer.stopWatch.StartStop();
+            adminTimer.StopWatch.StartStop();
 
             appUpdater = new ApplicationUpdater(this);
             bgWorker = new BackgroundWorker();
-            bgWorker.DoWork += bgWorker_DoWork;
-            bgWorker.RunWorkerCompleted += bgWorker_RunWorkerCompleted;
+            bgWorker.DoWork += BgWorker_DoWork;
+            bgWorker.RunWorkerCompleted += BgWorker_RunWorkerCompleted;
             bgWorker.RunWorkerAsync();
             lblUpdate.Text = "Checking for updates....";
-
         }
-
-        private void LoadUserPreferences()
-        {
-            if (!System.IO.File.Exists(xmlUserSettingsLocation))
-            {
-                stopWatchUserSettings.DatabaseCommitOption = DefaultDatabaseCommitOption;
-                stopWatchUserSettings.IncludeMicroseconds = DefaultIncludeMicroseconds;
-                stopWatchUserSettings.StopWatchInstances = DefaultStopWatchInstances;
-                SaveUserPreferences();
-            }
-            else
-            {
-                stopWatchUserSettings = xmlUserSettings.ReadFromFile() as UserSettings;
-            }
-        }
-
-        private void SaveUserPreferences()
-        {
-            xmlUserSettings.SaveToFile(stopWatchUserSettings);
-        }
-
-        void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (appUpdater.NewUpdate())
-                lblUpdate.Text = "New Update Available";
-            else
-                lblUpdate.Text = " ";
-
-        }
-
-        void bgWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            System.Threading.Thread.Sleep(10000);
-        }
-
-
-        protected void btnStartStop_Click(object sender, EventArgs e)
-        {
-            Button btnSender = (Button)sender;
-
-            foreach (StopWatchManager stopWatch in stopWatches)
-            {
-                if (stopWatch.stopWatch.displayUpdateTimer.Enabled)
-                {
-                    //This is for when a user selects a Start/Stop button that isn't currently active.
-                    if (btnSender.Name != (stopWatch.stopWatchSetName + "_Start"))
-                    {
-                        stopWatch.stopWatch.StartStop();
-                        stopWatch.SetStartButton();
-                    }
-                }
-            }
-
-            startStopAdminTimer();
-        }
-
-        protected void btnReset_Click(object sender, EventArgs e)
-        {
-            bool timerIsRunning = false;
-            foreach (StopWatchManager stopWatch in stopWatches)
-            {
-                if (stopWatch.stopWatch.displayUpdateTimer.Enabled)
-                {
-                    timerIsRunning = true;
-                    break;
-                }
-            }
-            if (!timerIsRunning)
-            {
-                lblMainDisplay.Text = "00:00:00";
-            }
-        }
-
 
         public string ApplicationName
         {
-            get { return AppName_AppID; }
+            get { return appNameAppID; }
         }
 
         public string ApplicationID
         {
-            get { return AppName_AppID; }
+            get { return appNameAppID; }
         }
 
         public Assembly ApplicationAssembly
@@ -225,103 +159,181 @@ namespace StopWatch.UI.Views
             get { return new Uri("https://raw.githubusercontent.com/dpaulson45/StopWatch/UpdateFileBranch/update.xml"); }
         }
 
+        protected void BtnStartStop_Click(object sender, EventArgs e)
+        {
+            Button btnSender = (Button)sender;
 
-        private void downloadUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+            foreach (StopWatchManager stopWatch in stopWatches)
+            {
+                if (stopWatch.StopWatch.DisplayUpdateTimer.Enabled)
+                {
+                    // This is for when a user selects a Start/Stop button that isn't currently active.
+                    if (btnSender.Name != (stopWatch.StopWatchSetName + "_Start"))
+                    {
+                        stopWatch.StopWatch.StartStop();
+                        stopWatch.SetStartButton();
+                    }
+                }
+            }
+
+            StartStopAdminTimer();
+        }
+
+        protected void BtnReset_Click(object sender, EventArgs e)
+        {
+            bool timerIsRunning = false;
+            foreach (StopWatchManager stopWatch in stopWatches)
+            {
+                if (stopWatch.StopWatch.DisplayUpdateTimer.Enabled)
+                {
+                    timerIsRunning = true;
+                    break;
+                }
+            }
+
+            if (!timerIsRunning)
+            {
+                lblMainDisplay.Text = "00:00:00";
+            }
+        }
+
+        private void LoadUserPreferences()
+        {
+            if (!System.IO.File.Exists(xmlUserSettingsLocation))
+            {
+                stopWatchUserSettings.DatabaseCommitOption = DefaultDatabaseCommitOption;
+                stopWatchUserSettings.IncludeMicroseconds = DefaultIncludeMicroseconds;
+                stopWatchUserSettings.StopWatchInstances = DefaultStopWatchInstances;
+                SaveUserPreferences();
+            }
+            else
+            {
+                stopWatchUserSettings = xmlUserSettings.ReadFromFile() as UserSettings;
+            }
+        }
+
+        private void SaveUserPreferences()
+        {
+            xmlUserSettings.SaveToFile(stopWatchUserSettings);
+        }
+
+        private void BgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (appUpdater.NewUpdate())
+            {
+                lblUpdate.Text = "New Update Available";
+            }
+            else
+            {
+                lblUpdate.Text = " ";
+            }
+        }
+
+        private void BgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            System.Threading.Thread.Sleep(10000);
+        }
+
+        private void DownloadUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             appUpdater.DoUpdate();
         }
 
-        private void toggleAdminEnabledWording(bool enabled)
+        private void ToggleAdminEnabledWording(bool enabled)
         {
             if (enabled)
+            {
                 enableTimerToolStripMenuItem.Text = "Disable Timer";
+            }
             else
+            {
                 enableTimerToolStripMenuItem.Text = "Enable Timer";
+            }
         }
 
-        private void startStopAdminTimer()
+        private void StartStopAdminTimer()
         {
             bool stopWatchInstanceRunning = false;
             foreach (StopWatchManager stopWatch in stopWatches)
             {
-                if (stopWatch.stopWatch.displayUpdateTimer.Enabled)
+                if (stopWatch.StopWatch.DisplayUpdateTimer.Enabled)
                 {
                     stopWatchInstanceRunning = true;
                     break;
                 }
             }
+
             if (stopWatchInstanceRunning)
             {
-                if (adminTimer.stopWatch.displayUpdateTimer.Enabled)
+                if (adminTimer.StopWatch.DisplayUpdateTimer.Enabled)
                 {
-                    adminTimer.stopWatch.StartStop();
+                    adminTimer.StopWatch.StartStop();
                 }
             }
             else
             {
-                if (!adminTimer.stopWatch.displayUpdateTimer.Enabled)
+                if (!adminTimer.StopWatch.DisplayUpdateTimer.Enabled)
                 {
-                    adminTimer.stopWatch.StartStop();
+                    adminTimer.StopWatch.StartStop();
                 }
             }
-            toggleAdminEnabledWording(true);
+
+            ToggleAdminEnabledWording(true);
         }
 
-
-        private void enableTimerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EnableTimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bool stopWatchInstanceRunning = false;
             foreach (StopWatchManager stopWatch in stopWatches)
             {
-                if (stopWatch.stopWatch.displayUpdateTimer.Enabled)
+                if (stopWatch.StopWatch.DisplayUpdateTimer.Enabled)
                 {
                     stopWatchInstanceRunning = true;
                     break;
                 }
             }
+
             if (!stopWatchInstanceRunning)
             {
-                toggleAdminEnabledWording(!adminTimer.stopWatch.displayUpdateTimer.Enabled);
-                adminTimer.stopWatch.StartStop();
+                ToggleAdminEnabledWording(!adminTimer.StopWatch.DisplayUpdateTimer.Enabled);
+                adminTimer.StopWatch.StartStop();
             }
             else
             {
-                toggleAdminEnabledWording(true);
+                ToggleAdminEnabledWording(true);
             }
         }
 
-        private void resetTimerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ResetTimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (adminTimer.stopWatch.displayUpdateTimer.Enabled)
+            if (adminTimer.StopWatch.DisplayUpdateTimer.Enabled)
             {
-                adminTimer.stopWatch.Restart();
+                adminTimer.StopWatch.Restart();
             }
             else
             {
-                adminTimer.stopWatch.Reset();
-                lblAdminTimer.Text = adminTimer.stopWatch.GetTime;
+                adminTimer.StopWatch.Reset();
+                lblAdminTimer.Text = adminTimer.StopWatch.GetTime;
             }
         }
 
         private void CommitAdminTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InsertForm insertForm = new InsertForm(primarySaveDirectory,
-                adminTimer.stopWatch.GetTotalMinutes);
+            InsertForm insertForm = new InsertForm(
+                primarySaveDirectory,
+                adminTimer.StopWatch.GetTotalMinutes);
             if (insertForm.ShowDialog() == DialogResult.OK)
             {
-                adminTimer.stopWatch.Restart();
+                adminTimer.StopWatch.Restart();
             }
         }
 
         private void StopWatchInstancesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void TimeDisplayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
-
     }
 }

@@ -6,19 +6,19 @@ namespace StopWatch.Data.Services
     public class XmlUserSettings
     {
         private static XmlSerializer xmlSerializer;
-        private string fileName; 
+        private readonly string fileName;
 
-        public XmlUserSettings(string SaveToLocation, object SaveObjectType)
+        public XmlUserSettings(string saveToLocation, object saveObjectType)
         {
-            fileName = SaveToLocation;
-            xmlSerializer = new XmlSerializer(SaveObjectType.GetType());
+            fileName = saveToLocation;
+            xmlSerializer = new XmlSerializer(saveObjectType.GetType());
         }
 
-        public void SaveToFile(object SaveObject)
+        public void SaveToFile(object saveObject)
         {
             using (StreamWriter sw = new StreamWriter(fileName))
             {
-                xmlSerializer.Serialize(sw, SaveObject);
+                xmlSerializer.Serialize(sw, saveObject);
             }
         }
 
@@ -26,7 +26,7 @@ namespace StopWatch.Data.Services
         {
             using (StreamReader sr = new StreamReader(fileName))
             {
-                return xmlSerializer.Deserialize(sr) as object; 
+                return xmlSerializer.Deserialize(sr) as object;
             }
         }
     }

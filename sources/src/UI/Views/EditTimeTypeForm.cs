@@ -3,12 +3,15 @@ using System.Windows.Forms;
 
 namespace StopWatch.UI.Views
 {
+    /// <summary>
+    /// Edit Time Type Form.
+    /// </summary>
     public partial class EditTimeTypeForm : Form
     {
-        public EditTimeTypeForm(object[] TimeTypes)
+        public EditTimeTypeForm(object[] timeTypes)
         {
             InitializeComponent();
-            foreach (var timeType in TimeTypes)
+            foreach (var timeType in timeTypes)
             {
                 lbTimeType.Items.Add(timeType.ToString());
             }
@@ -32,7 +35,7 @@ namespace StopWatch.UI.Views
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             lbTimeType.Items.Add(tbEditTimeType.Text);
-            tbEditTimeType.Text = "";
+            tbEditTimeType.Text = string.Empty;
         }
 
         private void BtnRemove_Click(object sender, EventArgs e)

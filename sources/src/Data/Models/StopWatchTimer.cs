@@ -6,43 +6,26 @@ namespace StopWatch.Data.Models
 {
     public class StopWatchTimer
     {
-        public Timer displayUpdateTimer;
-        private Stopwatch stopWatch;
+#pragma warning disable SA1401 // Fields should be private
+        public Timer DisplayUpdateTimer;
+#pragma warning restore SA1401 // Fields should be private
+
+        private readonly Stopwatch stopWatch;
+        private readonly string primarySaveLocation;
+        private readonly bool includeMicroseconds;
+
         private TimeSpan loadedTimeSpan;
-        private string primarySaveLocation;
-        private bool includeMicroseconds;
 
-        public string GetTime
+        public StopWatchTimer(
+            string saveFullPath,
+            bool includeMicroseconds)
         {
-            get
-            {
-                return includeMicroseconds ? 
-                    Convert.ToString(stopWatch.Elapsed.Add(loadedTimeSpan)) : 
-                    Convert.ToString(stopWatch.Elapsed.Add(loadedTimeSpan)).Split('.')[0];
-            }
-        }
-
-        public int GetTotalMinutes
-        {
-            get
-            {
-                TimeSpan timeSpan = stopWatch.Elapsed.Add(loadedTimeSpan);
-                int minutes = (Convert.ToInt32(timeSpan.TotalMinutes));
-                if (timeSpan.Seconds != 0)
-                    minutes++;
-                return minutes;
-            }
-        }
-
-        public StopWatchTimer(string SaveFullPath,
-            bool IncludeMicroseconds)
-        {
-            includeMicroseconds = IncludeMicroseconds;
-            displayUpdateTimer = new Timer();
+            this.includeMicroseconds = includeMicroseconds;
+            DisplayUpdateTimer = new Timer();
             stopWatch = new Stopwatch();
-            primarySaveLocation = SaveFullPath;
+            primarySaveLocation = saveFullPath;
 
-            displayUpdateTimer.Interval = 100;
+            DisplayUpdateTimer.Interval = 100;
 
             if (!System.IO.File.Exists(primarySaveLocation))
             {
@@ -56,57 +39,58 @@ namespace StopWatch.Data.Models
                     MessageBox.Show(ex.Message.ToString());
                 }
             }
+
             ReadStopWatchData();
         }
 
-        private void ReadStopWatchData()
+        public string GetTime
         {
-            string readLine;
-            System.IO.TextReader myFile = new System.IO.StreamReader(primarySaveLocation);
-            try
+            get
             {
-                readLine = myFile.ReadLine();
-                if (readLine != null)
+                return includeMicroseconds ?
+                    Convert.ToString(stopWatch.Elapsed.Add(loadedTimeSpan)) :
+                    Convert.ToString(stopWatch.Elapsed.Add(loadedTimeSpan)).Split('.')[0];
+            }
+        }
+
+        public int GetTotalMinutes
+        {
+            get
+            {
+                TimeSpan timeSpan = stopWatch.Elapsed.Add(loadedTimeSpan);
+                int minutes = Convert.ToInt32(timeSpan.TotalMinutes);
+                if (timeSpan.Seconds != 0)
                 {
-                    string[] splitRead = readLine.Split(':');
-                    loadedTimeSpan = new TimeSpan(Convert.ToInt32(splitRead[0]),
-                        Convert.ToInt32(splitRead[1]),
-                        Convert.ToInt32((Convert.ToDouble(splitRead[2]))));
+                    minutes++;
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
-            }
-            finally
-            {
-                myFile.Close();
+
+                return minutes;
             }
         }
 
         public void Restart()
         {
             stopWatch.Restart();
-            loadedTimeSpan = new TimeSpan();
+            loadedTimeSpan = default;
         }
 
         public void Reset()
         {
             stopWatch.Reset();
-            loadedTimeSpan = new TimeSpan();
+            loadedTimeSpan = default;
         }
 
         public void StartStop()
         {
-            if (!displayUpdateTimer.Enabled ||
+            if (!DisplayUpdateTimer.Enabled ||
                 !stopWatch.IsRunning)
             {
-                displayUpdateTimer.Enabled = true;
+                DisplayUpdateTimer.Enabled = true;
                 stopWatch.Start();
             }
             else
             {
-                displayUpdateTimer.Enabled = false;
+                DisplayUpdateTimer.Enabled = false;
                 stopWatch.Stop();
             }
         }
@@ -128,5 +112,30 @@ namespace StopWatch.Data.Models
             }
         }
 
+        private void ReadStopWatchData()
+        {
+            string readLine;
+            System.IO.TextReader myFile = new System.IO.StreamReader(primarySaveLocation);
+            try
+            {
+                readLine = myFile.ReadLine();
+                if (readLine != null)
+                {
+                    string[] splitRead = readLine.Split(':');
+                    loadedTimeSpan = new TimeSpan(
+                        Convert.ToInt32(splitRead[0]),
+                        Convert.ToInt32(splitRead[1]),
+                        Convert.ToInt32(Convert.ToDouble(splitRead[2])));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            finally
+            {
+                myFile.Close();
+            }
+        }
     }
 }
