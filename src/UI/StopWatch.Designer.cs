@@ -37,15 +37,12 @@
             this.enableTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMainDisplay = new System.Windows.Forms.Label();
-<<<<<<< Updated upstream
             this.lblAdminTimer = new System.Windows.Forms.Label();
             this.lblAdminTimeText = new System.Windows.Forms.Label();
             this.commitAdminTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-=======
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopWatchInstancesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timeDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
->>>>>>> Stashed changes
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -200,15 +197,13 @@
         private System.Windows.Forms.ToolStripMenuItem enableTimerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetTimerToolStripMenuItem;
         private System.Windows.Forms.Label lblMainDisplay;
-<<<<<<< Updated upstream
         private System.Windows.Forms.Label lblAdminTimer;
         private System.Windows.Forms.Label lblAdminTimeText;
         private System.Windows.Forms.ToolStripMenuItem commitAdminTimeToolStripMenuItem;
-=======
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopWatchInstancesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem timeDisplayToolStripMenuItem;
->>>>>>> Stashed changes
+
     }
 }
 
