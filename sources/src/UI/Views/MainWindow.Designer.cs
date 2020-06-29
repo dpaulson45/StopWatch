@@ -33,16 +33,16 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.adminTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.enableTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resetTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblMainDisplay = new System.Windows.Forms.Label();
-            this.lblAdminTimer = new System.Windows.Forms.Label();
-            this.lblAdminTimeText = new System.Windows.Forms.Label();
-            this.commitAdminTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopWatchInstancesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timeDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adminTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.commitAdminTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblMainDisplay = new System.Windows.Forms.Label();
+            this.lblAdminTimer = new System.Windows.Forms.Label();
+            this.lblAdminTimeText = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,9 +78,32 @@
             // downloadUpdateToolStripMenuItem
             // 
             this.downloadUpdateToolStripMenuItem.Name = "downloadUpdateToolStripMenuItem";
-            this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.downloadUpdateToolStripMenuItem.Text = "Download Update";
             this.downloadUpdateToolStripMenuItem.Click += new System.EventHandler(this.DownloadUpdateToolStripMenuItem_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stopWatchInstancesToolStripMenuItem,
+            this.timeDisplayToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // stopWatchInstancesToolStripMenuItem
+            // 
+            this.stopWatchInstancesToolStripMenuItem.Name = "stopWatchInstancesToolStripMenuItem";
+            this.stopWatchInstancesToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.stopWatchInstancesToolStripMenuItem.Text = "StopWatch Instances";
+            this.stopWatchInstancesToolStripMenuItem.Click += new System.EventHandler(this.StopWatchInstancesToolStripMenuItem_Click);
+            // 
+            // timeDisplayToolStripMenuItem
+            // 
+            this.timeDisplayToolStripMenuItem.Name = "timeDisplayToolStripMenuItem";
+            this.timeDisplayToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.timeDisplayToolStripMenuItem.Text = "Time Display";
+            this.timeDisplayToolStripMenuItem.Click += new System.EventHandler(this.TimeDisplayToolStripMenuItem_Click);
             // 
             // adminTimerToolStripMenuItem
             // 
@@ -105,6 +128,13 @@
             this.resetTimerToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.resetTimerToolStripMenuItem.Text = "Reset Timer";
             this.resetTimerToolStripMenuItem.Click += new System.EventHandler(this.ResetTimerToolStripMenuItem_Click);
+            // 
+            // commitAdminTimeToolStripMenuItem
+            // 
+            this.commitAdminTimeToolStripMenuItem.Name = "commitAdminTimeToolStripMenuItem";
+            this.commitAdminTimeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.commitAdminTimeToolStripMenuItem.Text = "Commit Admin Time";
+            this.commitAdminTimeToolStripMenuItem.Click += new System.EventHandler(this.CommitAdminTimeToolStripMenuItem_Click);
             // 
             // lblMainDisplay
             // 
@@ -134,37 +164,7 @@
             this.lblAdminTimeText.TabIndex = 4;
             this.lblAdminTimeText.Text = "Admin Time:";
             // 
-            // commitAdminTimeToolStripMenuItem
-            // 
-            this.commitAdminTimeToolStripMenuItem.Name = "commitAdminTimeToolStripMenuItem";
-            this.commitAdminTimeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.commitAdminTimeToolStripMenuItem.Text = "Commit Admin Time";
-            this.commitAdminTimeToolStripMenuItem.Click += new System.EventHandler(this.CommitAdminTimeToolStripMenuItem_Click);
-            // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stopWatchInstancesToolStripMenuItem,
-            this.timeDisplayToolStripMenuItem});
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "Edit";
-            // 
-            // stopWatchInstancesToolStripMenuItem
-            // 
-            this.stopWatchInstancesToolStripMenuItem.Name = "stopWatchInstancesToolStripMenuItem";
-            this.stopWatchInstancesToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.stopWatchInstancesToolStripMenuItem.Text = "StopWatch Instances";
-            this.stopWatchInstancesToolStripMenuItem.Click += new System.EventHandler(this.StopWatchInstancesToolStripMenuItem_Click);
-            // 
-            // timeDisplayToolStripMenuItem
-            // 
-            this.timeDisplayToolStripMenuItem.Name = "timeDisplayToolStripMenuItem";
-            this.timeDisplayToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.timeDisplayToolStripMenuItem.Text = "Time Display";
-            this.timeDisplayToolStripMenuItem.Click += new System.EventHandler(this.TimeDisplayToolStripMenuItem_Click);
-            // 
-            // StopWatch
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -178,7 +178,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.Name = "StopWatch";
+            this.Name = "MainWindow";
             this.Text = "StopWatch";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

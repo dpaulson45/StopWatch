@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_1D5418B6DFEF41B4B39AD148AEEC2738"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_53CCCCFF770C5A3BA0D79FC4F02ABD34"
         "OwnerKey" = "8:_7B8505F62BF6455189A98832C61435F6"
         "MsmSig" = "8:_UNDEFINED"
@@ -130,7 +136,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_53CCCCFF770C5A3BA0D79FC4F02ABD34"
+        "OwnerKey" = "8:_7B8505F62BF6455189A98832C61435F6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -143,12 +149,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_699D60142B9515E04C4491E0E95F6B9C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7B8505F62BF6455189A98832C61435F6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -185,6 +185,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_D7EB6F36FCD87647F11ABF1840377CA9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_53CCCCFF770C5A3BA0D79FC4F02ABD34"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -313,6 +319,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1D5418B6DFEF41B4B39AD148AEEC2738"
+            {
+            "SourcePath" = "8:..\\..\\sources\\src\\UI\\Resources\\StopWatch.ico"
+            "TargetName" = "8:StopWatch.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_A38C88B2C77644529E47F153D304204A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_53CCCCFF770C5A3BA0D79FC4F02ABD34"
             {
             "AssemblyRegister" = "3:1"
@@ -348,7 +374,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:StopWatch.Data, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:StopWatch.Data, Version=1.0.0.28978, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_5B6ABF619D29DDE65FE3F0B63DB1E24C"
@@ -710,15 +736,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:StopWatch"
-        "ProductCode" = "8:{410AA5BC-5A4B-47A6-A647-BFCABE525600}"
-        "PackageCode" = "8:{BFA6526F-E04F-4D88-B77A-36FAD5689A02}"
+        "ProductCode" = "8:{32BD6B1D-2351-4CC0-B377-E03F432C8A0F}"
+        "PackageCode" = "8:{9A38DD7C-0D7C-4BE4-88EB-3B9C79DB12B1}"
         "UpgradeCode" = "8:{A42C4959-136C-48F3-8C2E-532B9193007A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.7"
+        "ProductVersion" = "8:1.0.9"
         "Manufacturer" = "8:dpcoding"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -842,7 +868,7 @@
             "Target" = "8:_7B8505F62BF6455189A98832C61435F6"
             "Folder" = "8:_18E583FA7C4342DC8C34003AD22F246C"
             "WorkingFolder" = "8:_6EEF26DA41E3450F9B873476DEBADE9E"
-            "Icon" = "8:"
+            "Icon" = "8:_1D5418B6DFEF41B4B39AD148AEEC2738"
             "Feature" = "8:"
             }
         }
