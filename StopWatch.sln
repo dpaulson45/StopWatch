@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StopWatch", "UI\StopWatch.csproj", "{0CC6887D-84E4-4E6C-B083-17E29EF4D0CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StopWatch", "sources\UI\StopWatch.csproj", "{0CC6887D-84E4-4E6C-B083-17E29EF4D0CC}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{EE86E48E-4DF9-411C-84A1-4186BE7B2F42}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "build\Setup\Setup.vdproj", "{EE86E48E-4DF9-411C-84A1-4186BE7B2F42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StopWatchTimer", "StopWatchTimer\StopWatchTimer.csproj", "{8DFB7C19-4CC8-4067-A139-4C0DB0C5DF1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StopWatchTimer", "sources\StopWatchTimer\StopWatchTimer.csproj", "{8DFB7C19-4CC8-4067-A139-4C0DB0C5DF1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StopWatch.Data", "StopWatch.Data\StopWatch.Data.csproj", "{131B26E6-5027-43D0-829B-82A767CD82E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StopWatch.Data", "sources\StopWatch.Data\StopWatch.Data.csproj", "{131B26E6-5027-43D0-829B-82A767CD82E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
