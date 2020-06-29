@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StopWatch.Properties
+namespace StopWatch.UI.Properties
 {
 
 
