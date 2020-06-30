@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\InsertFormUserSettings.cs" />
+    <Compile Include="Models\LaborTracker.cs" />
     <Compile Include="Models\StopWatchManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

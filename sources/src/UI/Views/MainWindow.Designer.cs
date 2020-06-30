@@ -33,16 +33,23 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stopWatchInstancesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timeDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.commitAdminTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopWatchInstancesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timeDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMainDisplay = new System.Windows.Forms.Label();
             this.lblAdminTimer = new System.Windows.Forms.Label();
             this.lblAdminTimeText = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblWeekTotal = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblDayTotal = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblWeekUtilized = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lblDayUtilized = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,7 +66,6 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
             this.adminTimerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -81,29 +87,6 @@
             this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.downloadUpdateToolStripMenuItem.Text = "Download Update";
             this.downloadUpdateToolStripMenuItem.Click += new System.EventHandler(this.DownloadUpdateToolStripMenuItem_Click);
-            // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stopWatchInstancesToolStripMenuItem,
-            this.timeDisplayToolStripMenuItem});
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "Edit";
-            // 
-            // stopWatchInstancesToolStripMenuItem
-            // 
-            this.stopWatchInstancesToolStripMenuItem.Name = "stopWatchInstancesToolStripMenuItem";
-            this.stopWatchInstancesToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.stopWatchInstancesToolStripMenuItem.Text = "StopWatch Instances";
-            this.stopWatchInstancesToolStripMenuItem.Click += new System.EventHandler(this.StopWatchInstancesToolStripMenuItem_Click);
-            // 
-            // timeDisplayToolStripMenuItem
-            // 
-            this.timeDisplayToolStripMenuItem.Name = "timeDisplayToolStripMenuItem";
-            this.timeDisplayToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.timeDisplayToolStripMenuItem.Text = "Time Display";
-            this.timeDisplayToolStripMenuItem.Click += new System.EventHandler(this.TimeDisplayToolStripMenuItem_Click);
             // 
             // adminTimerToolStripMenuItem
             // 
@@ -136,11 +119,21 @@
             this.commitAdminTimeToolStripMenuItem.Text = "Commit Admin Time";
             this.commitAdminTimeToolStripMenuItem.Click += new System.EventHandler(this.CommitAdminTimeToolStripMenuItem_Click);
             // 
+            // stopWatchInstancesToolStripMenuItem
+            // 
+            this.stopWatchInstancesToolStripMenuItem.Name = "stopWatchInstancesToolStripMenuItem";
+            this.stopWatchInstancesToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            // 
+            // timeDisplayToolStripMenuItem
+            // 
+            this.timeDisplayToolStripMenuItem.Name = "timeDisplayToolStripMenuItem";
+            this.timeDisplayToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            // 
             // lblMainDisplay
             // 
             this.lblMainDisplay.AutoSize = true;
             this.lblMainDisplay.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold);
-            this.lblMainDisplay.Location = new System.Drawing.Point(12, 24);
+            this.lblMainDisplay.Location = new System.Drawing.Point(12, 60);
             this.lblMainDisplay.Name = "lblMainDisplay";
             this.lblMainDisplay.Size = new System.Drawing.Size(431, 65);
             this.lblMainDisplay.TabIndex = 2;
@@ -164,11 +157,91 @@
             this.lblAdminTimeText.TabIndex = 4;
             this.lblAdminTimeText.Text = "Admin Time:";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(66, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Week Total:";
+            // 
+            // lblWeekTotal
+            // 
+            this.lblWeekTotal.AutoSize = true;
+            this.lblWeekTotal.Location = new System.Drawing.Point(84, 24);
+            this.lblWeekTotal.Name = "lblWeekTotal";
+            this.lblWeekTotal.Size = new System.Drawing.Size(49, 13);
+            this.lblWeekTotal.TabIndex = 6;
+            this.lblWeekTotal.Text = "00:00:00";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 47);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(56, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Day Total:";
+            // 
+            // lblDayTotal
+            // 
+            this.lblDayTotal.AutoSize = true;
+            this.lblDayTotal.Location = new System.Drawing.Point(84, 47);
+            this.lblDayTotal.Name = "lblDayTotal";
+            this.lblDayTotal.Size = new System.Drawing.Size(49, 13);
+            this.lblDayTotal.TabIndex = 8;
+            this.lblDayTotal.Text = "00:00:00";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(170, 24);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(76, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Week Utilized:";
+            // 
+            // lblWeekUtilized
+            // 
+            this.lblWeekUtilized.AutoSize = true;
+            this.lblWeekUtilized.Location = new System.Drawing.Point(252, 24);
+            this.lblWeekUtilized.Name = "lblWeekUtilized";
+            this.lblWeekUtilized.Size = new System.Drawing.Size(49, 13);
+            this.lblWeekUtilized.TabIndex = 10;
+            this.lblWeekUtilized.Text = "00:00:00";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(170, 47);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(66, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Day Utilized:";
+            // 
+            // lblDayUtilized
+            // 
+            this.lblDayUtilized.AutoSize = true;
+            this.lblDayUtilized.Location = new System.Drawing.Point(252, 47);
+            this.lblDayUtilized.Name = "lblDayUtilized";
+            this.lblDayUtilized.Size = new System.Drawing.Size(49, 13);
+            this.lblDayUtilized.TabIndex = 12;
+            this.lblDayUtilized.Text = "00:00:00";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 306);
+            this.ClientSize = new System.Drawing.Size(533, 330);
+            this.Controls.Add(this.lblDayUtilized);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblWeekUtilized);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.lblDayTotal);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblWeekTotal);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblAdminTimeText);
             this.Controls.Add(this.lblAdminTimer);
             this.Controls.Add(this.lblMainDisplay);
@@ -200,8 +273,15 @@
         private System.Windows.Forms.Label lblAdminTimer;
         private System.Windows.Forms.Label lblAdminTimeText;
         private System.Windows.Forms.ToolStripMenuItem commitAdminTimeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopWatchInstancesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem timeDisplayToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblWeekTotal;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblDayTotal;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblWeekUtilized;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblDayUtilized;
     }
 }
