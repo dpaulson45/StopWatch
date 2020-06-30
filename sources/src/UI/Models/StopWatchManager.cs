@@ -15,7 +15,7 @@ namespace StopWatch.UI.Models
 
         private readonly StopWatchTimer stopWatch;
 
-        private readonly Form mainForm;
+        private readonly MainWindow mainForm;
         private readonly Label lblPrimaryDisplay;
         private readonly string tbSaveLocation;
         private readonly string saveDirectoryPath;
@@ -36,7 +36,7 @@ namespace StopWatch.UI.Models
             string stopWatchSetName,
             string saveDirectoryPath,
             int startingYLocation,
-            Form form,
+            MainWindow form,
             Label primaryDisplay,
             bool includeMicroseconds,
             bool databaseCommitOption,
@@ -269,6 +269,7 @@ namespace StopWatch.UI.Models
             if (insertForm.ShowDialog() == DialogResult.OK)
             {
                 ResetTimerAndNotes();
+                this.mainForm.AddAndSetDayStats();
             }
         }
 

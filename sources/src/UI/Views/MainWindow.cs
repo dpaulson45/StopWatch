@@ -20,7 +20,7 @@ namespace StopWatch.UI.Views
         private const int DefaultStopWatchInstances = 5;
         private const bool DefaultIncludeMicroseconds = true;
 
-        private const int StartingYLocation = 100;
+        private const int StartingYLocation = 140;
         private const int YPadding = 35;
 
         private readonly List<StopWatchManager> stopWatches;
@@ -38,6 +38,7 @@ namespace StopWatch.UI.Views
 #endif
 
         private UserSettings stopWatchUserSettings;
+        private List<TimeTracker> weekTimeTrackers;
 
         public MainWindow()
         {
@@ -127,6 +128,9 @@ namespace StopWatch.UI.Views
             bgWorker.RunWorkerCompleted += BgWorker_RunWorkerCompleted;
             bgWorker.RunWorkerAsync();
             lblUpdate.Text = "Checking for updates....";
+
+            LoadInitialDataFromDatabase();
+            LoadStats();
         }
 
         public string ApplicationName
@@ -157,6 +161,52 @@ namespace StopWatch.UI.Views
         public Uri ApplicationUpdaterXmlLocation
         {
             get { return new Uri("https://raw.githubusercontent.com/dpaulson45/StopWatch/UpdateFileBranch/update.xml"); }
+        }
+
+        public void AddAndSetDayStats()
+        {
+            var currentDay = System.DateTime.Now;
+            var query = new List<string>();
+            query.Add(
+                string.Format(
+                "{0}/{1}/{2}",
+                currentDay.Month,
+                currentDay.Day,
+                currentDay.Year));
+
+            var results = SqliteDataAccess.ReadLaborEntries(query);
+
+            foreach (var result in results)
+            {
+                var foundItem = false;
+
+                foreach (var timeTrackerItem in weekTimeTrackers)
+                {
+                    if (timeTrackerItem.DateTimeEntered == result.DateTimeEntered &&
+                        timeTrackerItem.TimeWorkedAmount == result.TimeWorkedAmount &&
+                        timeTrackerItem.SubGroupTimeType == result.SubGroupTimeType)
+                    {
+                        foundItem = true;
+                        break;
+                    }
+                }
+
+                if (!foundItem)
+                {
+                    if (result.TimeType == "Case")
+                    {
+                        LaborTracker.UtilizedDayLabor += result.TimeWorkedAmount;
+                        LaborTracker.UtilizedWeekLabor += result.TimeWorkedAmount;
+                    }
+
+                    LaborTracker.TotalDayLabor += result.TimeWorkedAmount;
+                    LaborTracker.TotalWeekLabor += result.TimeWorkedAmount;
+
+                    weekTimeTrackers.Add(result);
+                }
+            }
+
+            LoadStats();
         }
 
         protected void BtnStartStop_Click(object sender, EventArgs e)
@@ -325,7 +375,54 @@ namespace StopWatch.UI.Views
             if (insertForm.ShowDialog() == DialogResult.OK)
             {
                 adminTimer.StopWatch.Restart();
+                AddAndSetDayStats();
             }
+        }
+
+        private void LoadInitialDataFromDatabase()
+        {
+            weekTimeTrackers = new List<TimeTracker>();
+            var currentDate = System.DateTime.Now;
+            var currentDay = string.Format("{0}/{1}/{2}", currentDate.Month, currentDate.Day, currentDate.Year);
+            var queryDates = new List<string>();
+
+            for (int day = 0; day <= (int)currentDate.DayOfWeek; day++)
+            {
+                var date = System.DateTime.Now.AddDays(-((int)currentDate.DayOfWeek - day));
+                var value = string.Format("{0}/{1}/{2}", date.Month, date.Day, date.Year);
+                queryDates.Add(value);
+            }
+
+            var results = SqliteDataAccess.ReadLaborEntries(queryDates);
+
+            foreach (var entry in results)
+            {
+                if (entry.WorkedDate == currentDay)
+                {
+                    LaborTracker.TotalDayLabor += entry.TimeWorkedAmount;
+
+                    if (entry.TimeType == "Case")
+                    {
+                        LaborTracker.UtilizedDayLabor += entry.TimeWorkedAmount;
+                    }
+                }
+
+                if (entry.TimeType == "Case")
+                {
+                    LaborTracker.UtilizedWeekLabor += entry.TimeWorkedAmount;
+                }
+
+                LaborTracker.TotalWeekLabor += entry.TimeWorkedAmount;
+                weekTimeTrackers.Add(entry);
+            }
+        }
+
+        private void LoadStats()
+        {
+            lblDayTotal.Text = Math.Round(LaborTracker.TotalDayLabor / 60, 2).ToString();
+            lblDayUtilized.Text = Math.Round(LaborTracker.UtilizedDayLabor / 60, 2).ToString();
+            lblWeekTotal.Text = Math.Round(LaborTracker.TotalWeekLabor / 60, 2).ToString();
+            lblWeekUtilized.Text = Math.Round(LaborTracker.UtilizedWeekLabor / 60, 2).ToString();
         }
 
         private void StopWatchInstancesToolStripMenuItem_Click(object sender, EventArgs e)
