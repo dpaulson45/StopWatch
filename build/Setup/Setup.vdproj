@@ -136,7 +136,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7B8505F62BF6455189A98832C61435F6"
+        "OwnerKey" = "8:_53CCCCFF770C5A3BA0D79FC4F02ABD34"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -149,6 +149,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_699D60142B9515E04C4491E0E95F6B9C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_7B8505F62BF6455189A98832C61435F6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -185,12 +191,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_D7EB6F36FCD87647F11ABF1840377CA9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_53CCCCFF770C5A3BA0D79FC4F02ABD34"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -374,7 +374,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:StopWatch.Data, Version=1.0.0.28978, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:StopWatch.Data, Version=1.0.0.41688, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_5B6ABF619D29DDE65FE3F0B63DB1E24C"
@@ -736,15 +736,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:StopWatch"
-        "ProductCode" = "8:{32BD6B1D-2351-4CC0-B377-E03F432C8A0F}"
-        "PackageCode" = "8:{9A38DD7C-0D7C-4BE4-88EB-3B9C79DB12B1}"
+        "ProductCode" = "8:{0598C609-817C-46E5-8C05-E2720C901F99}"
+        "PackageCode" = "8:{56F67380-49CC-476B-A8EC-F1345260D71B}"
         "UpgradeCode" = "8:{A42C4959-136C-48F3-8C2E-532B9193007A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.9"
+        "ProductVersion" = "8:1.1.0"
         "Manufacturer" = "8:dpcoding"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
