@@ -51,18 +51,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>8E27FE843711977A36FF117AE8A32522F4B4A387</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>StopWatch.UI_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ApplicationUpdater">
       <HintPath>..\..\external\ApplicationUpdater.dll</HintPath>
@@ -101,11 +89,15 @@
     <Compile Include="Models\StopWatchManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\EditTimeTypeForm.cs" />
+    <Compile Include="Views\EditTimeTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\EditTimeTypeForm.Designer.cs">
       <DependentUpon>EditTimeTypeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\InsertForm.cs" />
+    <Compile Include="Views\InsertForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\InsertForm.Designer.cs">
       <DependentUpon>InsertForm.cs</DependentUpon>
     </Compile>
